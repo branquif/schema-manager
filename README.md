@@ -1,5 +1,7 @@
 # General logic schema governance manager
 
+**This is early alpha proof of concept project**
+
 This project provides a unification of data schemas, being a superset of the
 most common data schemas definitions.
 
