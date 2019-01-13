@@ -1,0 +1,152 @@
+!import types.schm
+
+namespace com.accenture.common
+    type id long """long integer representing a unique id"""
+    type code string(12):
+        """short strig, usually a mnemonic, used as alternate key or primary
+        key when referencial static data"""
+    type Name string(255) """Standard Name"""
+    type Version string(255) """version of the aggregate"""
+    type Username string(255) """default username string"""
+    type Description string(4000) """Description"""
+    type Money decimal(19,4):
+        """Decimal type, with precision of 19 and 4 decimal to represent monetary
+        values"""
+
+namespace com.accenture.imat:
+    comp_record AuditField:
+        created_date Date """date of the record creation"""
+        created_by Username """username that created the record"""
+        last_updated_date Date """date that the record were last updated"""
+        last_updated_by Username """username who uptaded the record the last"""
+
+
+    valueObject AttributeMap:
+        name Name
+        value String(4000)
+
+    record NameSpace:
+        """namespace to focus the domains into specific areas (namespaces)"""
+        *code Code
+        name Name
+        description Description
+
+    record BoundedContext:
+        *code Code
+        name Name """BC Name"""
+        description Description """BC Description"""
+        attributeMap *AttributeMap? """BoundedContext attributeMap"""
+        !AuditField     "Expand the record in-line"
+
+    enum SchemaType:
+        """the types of schemas - flat, hierarchical or relational"""
+        FLAT = 1
+        HIERARCHICAL = 2
+        CUSTOM = 3
+
+    valueObject DataTypes
+        """The data types used by the models"""
+        *code Code
+        description Description
+
+    record SchemaType:
+        """the data types associated with different technologies"""
+        *code Code
+        name Name
+        type SchemaType
+        dataTypes *DataType
+        !include AuditField
+
+    enum LOVStatus:
+        *CANDIDATE = 0
+        IN_USE = 1
+        DEPRECATED = 2
+
+    enum LOVTypeEnum:
+        NUMERIC = 0
+        STRING = 1
+        BOOL = 2
+
+    record LOFType:
+        *code Code
+        *boundedContext !BoundedContext(code)
+        type LOVTypeEnum
+        description Description
+        mandatory bool?
+        !include AuditField
+
+
+    valueObject LOVValues:
+        *code Code
+        type !LOVType
+        value string(4000)
+        high_value string?(4000)
+        low_value string?(4000)
+        target_high_value string?(4000)
+        target_low_value string?(4000)
+
+    record ListOfValues:
+        """structure to store general domains (list of values"""
+        *code Code
+        description Description
+        status LOVStatus
+        values *LOVValues?
+
+
+    valueObject Attribute:
+        """Attribute of an entity"""
+        name Name
+        description Description?
+        attributeMap *AttributeMap?
+        dataType !DataType(code)
+        isNull bool
+        isPK bool
+        order int
+        lenght int?
+        precision int?
+        scale int?
+        defaultValue string?(4000)
+        domain string?(4000)
+        list_of_values_code !ListOfValues?(code)
+
+    enum EntityType:
+        """Following DDD, as Entity, Value Objecs and Aggregates.
+        A custom type is also available for other types of entities"""
+        VALUE_OBJECT = 1
+        ENTITY = 2
+        AGGREGATE = 3
+        AGGREGATE_ROOT = 4
+        CUSTOM = 5
+
+    valueObject Entity:
+        """Entity being represented in the logical model"""
+        *code Code
+        name Name
+        description Description?
+        type EntityType
+        attributeMap *AttributeMap?
+        attributes *Attribute?
+
+    valueObject SchemaSource:
+        """Identify the source of the schema, as it comes from a pre-defined
+        structure, lide a software package (SAP, SalesForce) or pre-existing
+        legacy structures"""
+        *name Name
+        desciption Description
+        connectionString string(4000)
+        password string(255)
+
+    record Schema:
+        *name Name
+        *version Version
+        *boundedContext !BoundedContext?
+        *namespace !Namespace(code)
+        type !SchemaType
+        attributeMap *AttributeMap
+        schemaSource SchemaSource?
+        entities *Entity?
+        !include AuditField
+
+
+
+
