@@ -1,0 +1,24 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+lark-parser = "*"
+pyaml = "*"
+marshmallow = "*"
+marshmallow-enum = "*"
+eel = "*"
+pydot = "*"
+
+[dev-packages]
+black = {version = ">=18"}
+pytest = "*"
+jupyter = "*"
+ipython = "*"
+
+[requires]
+python_version = "3.7"
+
+[pipenv]
+allow_prereleases = true

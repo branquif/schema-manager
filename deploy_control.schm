@@ -1,0 +1,28 @@
+namespace com.accenture.deployControlTool
+
+	alias descrition text "Free text for descritions"
+	alias name string(256) "String representing a human readeable name"
+	alias code string(15) >
+		String with a mnemonic/acronym.
+		Usualy used as alternate key or primary key
+
+	record Service "The service definition":
+		*id	uuid
+		code string(15) "the service code or acronym"
+		name name
+		description description
+
+	record ServiceVersion
+		"Describes the service version":
+		*id uuid
+		version_name name
+		description description
+		service(service_id) Service
+
+	record serviceVersion
+		"""which version of the service"""
+
+	record environment
+		"""Describes the environmnet
+
+

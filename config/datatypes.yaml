@@ -1,0 +1,41 @@
+data_types:
+  boolean: 
+    desc: a binary value
+  int: 
+    desc: 32-bit signed integer
+  long: 
+    desc: 64-bit signed integer
+  float: 
+    desc: single precision 32-bit IEEE 754 floating-point number
+  double: 
+    desc: double precision 64-bit IEEE 754 floating-point number
+  bytes: 
+    desc: sequence of 8-bit unsigned bytes support size
+  string: 
+  decimal:
+    desc: arbitrary-precision signed decimal number scale, precision
+  date: 
+    desc: >
+      32-bit unsigned integer representing the number of days since epoch\n
+      January 1, 1970 with no corresponding time value. Values are integer days since epoch or 
+      string format yyyy-mm-dd
+  time:
+    desc: >
+      a time of day, with no reference to a particular calendar, time
+      zone or date, with a precision of milliseconds. It is represented internally
+      as an int. Values are integer milliseconds from midnight or string format
+      as hh:mm:ss[.fff]: where miliseconds f are optional.
+  time-micros:
+    desc: >
+      a time of day, with no reference to a particular calendar, time
+      zone or date, with a precision of microseconds. It is represented internally
+      as a long. Values are integer microseconds from midnight or string format
+      as hh:mm:ss[.fff]: where miliseconds f are optional."
+
+  datetime:
+    desc: date and time, as in YYYY-MM-DDThh:mm:ss:fff
+
+  uuid:
+    desc: A UUID in standard UUID format (http://en.wikipedia.org/wiki/Universally_unique_identifier) 
+
+

@@ -1,0 +1,15 @@
+gen_datatype, spec_datatype, comments
+boolean, boolean,
+int,integer,
+long,bigint,
+float,real,
+double,double,
+decimal,decimal,
+bytes,bytea, [use hex format for input/output] (https://www.postgresql.org/docs/current/static/datatype-binary.html)
+string,varchar, default size of 256 if not defined
+text,text,
+date,date,
+time,time,
+time-micros,time,
+datetime,timestamp,
+uuid,uuid, [Standard uuid] (http://en.wikipedia.org/wiki/Universally_unique_identifier)

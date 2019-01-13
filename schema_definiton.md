@@ -1,4 +1,4 @@
-# General logic schema governance manager
+# General schema definitions
 
 This project provides a unification of data schemas, being a superset of the
 most common data schemas definitions.

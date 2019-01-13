@@ -1,0 +1,15 @@
+gen_datatype, spec_datatype, comments
+boolean, TINYINT(1),
+int, INT,
+long, BIGINT,
+fload, FLOAT,
+double, DOUBLE,
+blob,BLOB,
+string,VARCHAR, default size of 256 if not defined
+text,TEXT,
+decimal,DECIMAL,
+date,DATE,
+time,TIME,
+time-micros,TIME,
+datetime,TIMESTAMP,
+uuid,BINARY(16), [using binary representation] (http://www.mysqltutorial.org/mysql-uuid/)

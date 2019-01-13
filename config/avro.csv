@@ -1,0 +1,15 @@
+gen_datatype, spec_datatype, comments
+boolean, boolean,
+int, integer,
+long, bigint,
+fload, float,
+double, double,
+blob,blob,
+string,varchar, default size of 256 if not defined
+text,text,
+decimal,decimal,
+date,date,
+time,time,
+time-micros,time,
+datetime,timestamp,
+uuid,uuid, [Standard uuid] (http://en.wikipedia.org/wiki/Universally_unique_identifier)

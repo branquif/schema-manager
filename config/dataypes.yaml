@@ -1,0 +1,94 @@
+data_types:
+  boolean: 
+    desc: a binary value
+    cassandra: boolean
+    mysql: TINYINT(1)
+    openAPI: 
+      type: boolean
+  int: 
+    desc: 32-bit signed integer
+    cassandra: integer 
+    mysql: INT
+    openAPI: 
+      type: integer
+      format: int32
+  long: 
+    desc: 64-bit signed integer
+    cassandra: bigint
+    mysql: BIGINT
+    openAPI:
+      type: integer
+      format: int64
+  float: 
+    desc: single precision 32-bit IEEE 754 floating-point number
+    cassandra: float
+    mysql: FLOAT
+    openAPI:
+      type: number
+      format: float
+  double: 
+    desc: double precision 64-bit IEEE 754 floating-point number
+    cassandra: double
+    mysql: DOUBLE
+    openAPI:
+      type: number
+      format: double
+  bytes: 
+    desc: sequence of 8-bit unsigned bytes support size
+    cassandra: blob
+    mysql: BLOB
+    openAPI:
+      type: string
+      format: byte
+  string: 
+    desc: unicode character sequence support size
+    cassandra: varchar
+    mysql: VARCHAR
+    openAPI:
+      type: string
+  decimal:
+    desc: arbitrary-precision signed decimal number scale, precision
+    cassandra: decimal
+    mysql: DECIMAL
+    openAPI:
+      type: string
+      format: decimal
+  date: 
+    desc: >
+      32-bit unsigned integer representing the number of days since epoch\n
+      January 1, 1970 with no corresponding time value. Values are integer days since epoch or 
+      string format yyyy-mm-dd
+    cassandra: date
+    mysql: DATE
+    openAPI:
+      type: string
+      format: date
+  time:
+    desc: >
+      a time of day, with no reference to a particular calendar, time
+      zone or date, with a precision of milliseconds. It is represented internally
+      as an int. Values are integer milliseconds from midnight or string format
+      as hh:mm:ss[.fff]: where miliseconds f are optional.
+    cassandra: time
+    mysql: TIME(3)
+    openAPI:
+      type: number
+      format: int64
+      desc: number of miliseconds since midnight
+  time-micros:
+    desc: >
+      a time of day, with no reference to a particular calendar, time
+      zone or date, with a precision of microseconds. It is represented internally
+      as a long. Values are integer microseconds from midnight or string format
+      as hh:mm:ss[.fff]: where miliseconds f are optional."
+    cassandra: time
+    mysql: TIME(6)
+    openAPI:
+      type: number
+      format: int64
+      desc:  number of nanoseconds since midnight
+
+  datetime:
+    desc: date and time, as in YYYY-MM-DDThh:mm:ss:fff
+    cassandra: 
+
