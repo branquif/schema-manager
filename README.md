@@ -2,10 +2,68 @@
 
 **This is early alpha proof of concept project**
 
-This project provides a unification of data schemas, being a superset of the
-most common data schemas definitions.
+## Motivation
+There is a lot of different ways to define schemas nowadays, being it APIs,
+databases, messaging and events, files, etc..
 
-Originally it is amied to encompass:
+Today, for more complex systems and microservices oriented architectures, 
+it is common to have more than one schema definition type involved (API and
+Databases being the most common).
+
+This creates the problem of having the same concepts being represented by
+different schema definitions, making the data governance harder, since the data
+concepts are  spread all over those different schemas.
+The suggested solution for this problem is to create a "logical schema model"
+that can work as the root to generate all other needed schemas, and this
+logical model also be used to validate with domain experts if the concepts
+being used are correct.
+
+From that logical schema model, we can derive other schema styles and
+instantiate other schema types.
+
+
+## Goal
+The goal of this project is to facilitate data governance in a heterogeneous
+environment, where we use several different data schemas, like APIs, Databases
+and Messaging.
+
+One of the main goals is to represent different schemas in a domain specific
+language that can be used to generate those specific schemas, following this
+characteristics:
+1. Is a Human Readable Format(HRF): can be read and manipulated in text format
+2. Plays well with software version control systems (GIT), being able to use the
+   default tools, like diff, and be versioned along with the software being
+   built
+3. Be the root of all specific schemas, able to automate their generation
+4. Be able to represent the selected physical schemas in their respective schema
+   style types, adding necessary elements, like:
+		- Headers, Partition Keys and Body for Messages and Events
+		- Indexes, Foreign Keys and table attributes for relational databases
+		- Routes, Request and Response schemas and specific attributes for APIs
+
+Overall, it must work like a logical data model for specific data schemas, but
+encompassing more schema types than traditional database logical models
+
+### Future goals
+One of the future goals is to implement reverse engineering of physical models
+into logical models. This is still under discussion.
+
+## Schema style types
+Schema-manager need to support three schema style types:
+1. **Nestable** : schemas that can have nested schemas, like json, xml, yaml
+   formats;
+2. **Relational**: schemas that represent relational databases, with tables,
+   attributes and relationships;
+3. **Flat**: schemas that have no nested or relationship among entities, like
+text files and comma separates files (csv)
+
+Each style can have different ways to be represented, but schema-man uses
+a nested schema definition style to represent all other styles.
+
+## Physical schemas
+
+The following schemas are being taken in consideration to be represented by the schema-manager:
+
 Schemas:
  - json schemas
  - ProtocolBuffers
@@ -13,198 +71,207 @@ Schemas:
  - Cassandra
  - MySQL
  - Postgres
+
 RPCs:
  - gRPC
  - OpenAPI
+ - RAML
 EventBased
  - Kafka
 
-# Primitive types
-The set of primitive type names is:
+## Design considerations
+The syntax of schema-manager is clearly inspired in the python programming language.
 
-- null: no value
-- boolean: a binary value
-- int: 32-bit signed integer
-- long: 64-bit signed integer
-- float: single precision (32-bit) IEEE 754 floating-point number
-- double: double precision (64-bit) IEEE 754 floating-point number
-- bytes: sequence of 8-bit unsigned bytes (support size)
-- string: unicode character sequence (support size)
-- decimal: arbitrary-precision signed decimal number (scale, precision)
-- date: 32-bit unsigned integer representing the number of days since epoch 
-	(January 1, 1970) with no corresponding time value. Values are integer (days
-	since epoch) or string format 'yyyy-mm-dd'
-- time-millis: a time of day, with no reference to a particular calendar, time
-	zone or date, with a precision of milliseconds. It is represented internally
-	as an int. Values are integer (milliseconds from midnight) or string format
-	as 'hh:mm:ss[.fff]', where miliseconds (f) are optional.
-- time-micros: a time of day, with no reference to a particular calendar, time
-	zone or date, with a precision of microseconds. It is represented internally
-	as a long. Values are integer (microseconds from midnight) or string format
-	as 'hh:mm:ss[.fff]', where miliseconds (f) are optional.
-- timestamp: 
+Here goes the zen of schema-manager adapted from [ the zen of python ]( https://en.wikipedia.org/wiki/Zen_of_Python ):  
 
+Beautiful is better than ugly.  
+Explicit is better than implicit.  
+Simple is better than complex.  
+Complex is better than complicated.  
+Sparse is better than dense.  
+Readability counts.    
+Special cases aren't special enough to break the rules.   
+Although practicality beats purity.  
+Errors should not pass silently.  
+In the face of ambiguity, refuse the temptation to guess.  
+There should be one—and preferably only one—obvious way to do it.  
+If the implementation is hard to explain, it's a bad idea.  
+If the implementation is easy to explain, it may be a good idea.  
+Namespaces are one honking great idea—let's do more of those!  
 
+## Examples
 
-# Complex types
-There are six kinds of complex types: records, enums, arrays, maps, unions and
-fixed.
-
-## Records
-Records support three attributes:
-- name: name of the record (required)
-- doc: documentation to the user of this schema (optional)
-- aliases: array providing alternate names for this record (optional)
-- fields: list of fields (required). Each field has the following attributes, in
-	this order:
-	- name: the name of the field (required)
-	- aliases: array of strings, providing alternate names for this field (optional)
-	- type: the type of the field primitive or complex (required)
-	- size: a max size - always in parentheses (optional)
-	- null and default: define a field as null, and an optional default value in
-		case of nullable value between parentheses
-	- order: specifies how this field impacts sort ordering of this record
-		(optional). Valid values are asc (the default), desc, or ignore.
-	- doc: description of the field for users, between double quotes (optional)
-
-Example:
-```
-namespace example.schema
-	record User
-		name string(256) "Full name of the user"
-		favorite_number int null(7) "User's favorite number"
-		favorite_color string null("blue") "User's favorite color"
-		mother_name(mother, mom_name) string(256) asc "the mothers full name"
-```
-
-## Enums
-Enums support the following attributes:
-- name: the name of the enum (required)
-- aliases: array of strings providing alternate names for this enum (optional(
-- symbols: list of symbols, as strings. All symbols in an enum must be unique;
-	duplicates are prohibited. Every symbol must match the regular expression
-	[A-Za-z_] [A-Za-z_]*
-
-Example:
-```
-enum Suit("suit", "deck_suit")  (SPADES, DIAMONDS, CLUBS, HEARTS)
-```
-
-## Arrays
-Arrays support a single attribute, defining the type of the items of the array:
-- items: the schema of the array type.
-
-Example:
-```
-namespace example.schema
-	record Invoice
-		header string "the invoice header"
-		items array(
-			record item
-				name string
-				value Decimal(19,4)
-		)
-		total Decimal(19,4)
-
-	record OrderItem
-		name string
-		value Decimal(19,4)
-	
-	record Order
-		customerId string "the customer id"
-		items array(OrderItem)
+Some examples of what is possible to define using schema-manager
 
 ```
+# Separete types using namespaces
+namespace com.accenture.common
 
-## Maps
-Maps support two attribute:
-- key: the schema of the map's key
-- values: the schema of the map's value
+	#####
+	# define simple type aliases
+	#####
+    type id long "long integer representing a unique id"
+
+    type code string(12):
+        "short strig, usually a mnemonic, used as alternate key or primary
+        key when referencial static data"
+
+    type Name string(255) "Standard Name"
+
+    type Version string(255) "version of the aggregate"
+
+    type Username string(255) "default username string"
+
+    type Description string(4000) "Description"
+
+	#####
+	# Define long documentation, in an arbitrary lenght
+	#####
+    type Money decimal(19,4):
+        """Decimal type, with precision of 19 and 4 decimal to represent monetary
+        values
+		It is known that 15 digits + 4 decimal digits are a good practice to represent storage.
+		Some important articles:
+		(four decimal places when using decimal to represent money)[https://stackoverflow.com/questions/34143961/why-are-four-decimal-places-suggested-when-using-decimal-to-represent-money]"""
 
 
+namespace com.accenture.imat:
+	"""The imat namespace"""
 
-Example:
+	# make the com.accenture.common types accessible without full qualified name
+	from com.accenture.common import Name, Username,
+			id, Money
+
+    record AuditField:
+
+        created_date Date "date of the record creation"
+        created_by Username "username that created the record"
+        last_updated_date Date "date that the record were last updated"
+		# Username type bein accessed using full qualified name
+        last_updated_by com.accenture.common.Username:
+			"""username who uptaded the record the last"""
+
+
+    record KeyValue:
+		"""key/value attribute to be used as a name/value set of values by
+		other records."""
+
+        key Name
+        value String(4000)
+
+
+    record NameSpace:
+        """namespace to focus the domains into specific areas (namespaces)"""
+
+        *code Code
+        name Name
+        description Description
+
+
+    record BoundedContext:
+        *code Code
+        name Name "BC Name"
+        description Description "BC Description"
+        attributeMap *AttributeMap null "BoundedContext attributeMap"
+		# will include the AuditField attributes at this location, 
+		# keeping the order of the attributes in the record definition
+		# (some schemas, like databases and ProtoBuf requires the correct order)
+        !include AuditField     "Expand the record in-line"
+
+
+    enum SchemaType:
+        """the types of schemas - flat, nestable or relational"""
+
+        FLAT
+        NESTABLE
+        CUSTOM
+
+
+    record DataTypes
+        """The data types used by the models"""
+
+        *code Code
+        description Description
+		### complex types can be defined in a nested way
+		type enum :
+
+			INTEGER
+			FLOAT
+			DECIMAL
+			STRING
+			DATE
+			DATETIME
+
+
+    record SchemaType:
+        """the data types associated with different technologies"""
+
+        *code Code
+        name Name
+        type SchemaType
+        dataTypes *DataType
+        !include AuditField
+
+
+    record Attribute:
+        """Attribute of an entity"""
+        name Name
+        description Description null
+        attributeMap *AttributeMap null
+        dataType !DataType
+        isNull bool
+        isPK bool
+        order int
+        lenght int null
+        precision int null
+        scale int null
+        defaultValue string(4000) null
+        domain string(4000) null
+        list_of_values_code !ListOfValues null
+
+
+    enum EntityType:
+        """Following DDD, as Entity, Value Objecs and Aggregates.
+        A custom type is also available for other types of entities"""
+
+        VALUE_OBJECT
+        ENTITY
+        AGGREGATE
+        AGGREGATE_ROOT
+        CUSTOM
+
+
+    record Entity:
+        """Entity being represented in the logical model"""
+
+        *code Code
+        name Name
+        description Description null
+        type EntityType
+        attributeMap *AttributeMap null
+        attributes *Attribute null
+
+    record SchemaSource:
+        """Identify the source of the schema, as it comes from a pre-defined
+        structure, lide a software package (SAP, SalesForce) or pre-existing
+        legacy structures"""
+
+        *name Name
+        desciption Description
+        connectionString string(4000)
+        password string(255)
+
+    record Schema:
+
+        *name Name
+        *version Version
+        *boundedContext !BoundedContext null
+        *namespace !Namespace null
+        type !SchemaType
+        attributeMap *AttributeMap
+        schemaSource SchemaSource null
+        entities *Entity null
+        !include AuditField
+
+
 ```
-namespace example.schema
-	record cycling_teams
-		id uuid
-		lastname string
-		firstname string
-		teams map(int, string)
-
-```
-
-Key is assumed as string when not informed.
-Example:
-```
-teams map(int) // teams key will be a string, with int values
-```
-
-## Unions (Oneof)
-A union or a OneOf is used to indicate that a field may have more than one type. They are
-represented as arrays.
-In case of a nullable field, the default value is related to the first type of
-the union.
-
-For example, suppose you had a field that could be either a string or an int.
-Then the union is represented as: 
-```
-string|int
-
-```
-
-You might use it in the following way:
-
-```
-namespace example.schema
-	record Address
-		street string
-		number int
-
-	record FullName
-		first string|null
-		last string
-		address string|Address null("Sesame Street") 
-
-```
-
-# Preprocessing
-Some minor preprocessing capabilites are included in the processing of schema
-definitions, and are similar to a C language preprocessor, except that instead
-of using the # symbol we will use !
-
-## Including files
-
-Use the !include directive to include schema files.
-
-For example:
-```
-!include Address.schm
-
-record Person
-	name string
-	address Address # address record type defined at the Address.schm file
-
-```
-
-## Constant definition
-
-You can define constat using the !define directive. As in C language, a constant
-name can only use alphanumeric and underscore character, and cannot start with
-a digit.
-
-```
-!define MONEY decimal(19,4)
-!include Acconut.schm
-
-record Transfer
-	fromAccount Account
-	toAccount Account
-	value MONEY
-```
-
-Of course, you can use the !include directove to define all your constants in
-a single file that you include in your schema definition.
-
-Constant can be undefined with the !undef XXX directive.
-

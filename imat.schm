@@ -1,82 +1,129 @@
 !import types.schm
 
 namespace com.accenture.common
-    type id long """long integer representing a unique id"""
+
+    type id long "long integer representing a unique id"
+
     type code string(12):
-        """short strig, usually a mnemonic, used as alternate key or primary
-        key when referencial static data"""
-    type Name string(255) """Standard Name"""
-    type Version string(255) """version of the aggregate"""
-    type Username string(255) """default username string"""
-    type Description string(4000) """Description"""
+        "short strig, usually a mnemonic, used as alternate key or primary
+        key when referencial static data"
+
+    type Name string(255) "Standard Name"
+
+    type Version string(255) "version of the aggregate"
+
+    type Username string(255) "default username string"
+
+    type Description string(4000) "Description"
+
     type Money decimal(19,4):
         """Decimal type, with precision of 19 and 4 decimal to represent monetary
         values"""
 
+
 namespace com.accenture.imat:
-    comp_record AuditField:
-        created_date Date """date of the record creation"""
-        created_by Username """username that created the record"""
-        last_updated_date Date """date that the record were last updated"""
-        last_updated_by Username """username who uptaded the record the last"""
+	"""The imat namespace"""
+
+	# make the com.accenture.com types accessible without full qualified name
+	alias com.accenture.com.*
+
+	# abstract records are ment to be used by other records and cannot be used
+	# to create physical schemas
+    abstract record AuditField:
+
+        created_date Date "date of the record creation"
+        created_by Username "username that created the record"
+        last_updated_date Date "date that the record were last updated"
+		# Username type bein accessed using full qualified name
+        last_updated_by com.accenture.common.Username:
+			"""username who uptaded the record the last"""
 
 
-    valueObject AttributeMap:
-        name Name
+    record KeyValue:
+		"""key/value attribute to be used as a name/value set of values by
+		other records."""
+
+        key Name
         value String(4000)
+
 
     record NameSpace:
         """namespace to focus the domains into specific areas (namespaces)"""
+
         *code Code
         name Name
         description Description
 
+
     record BoundedContext:
         *code Code
-        name Name """BC Name"""
-        description Description """BC Description"""
-        attributeMap *AttributeMap? """BoundedContext attributeMap"""
-        !AuditField     "Expand the record in-line"
+        name Name "BC Name"
+        description Description "BC Description"
+        attributeMap *AttributeMap null "BoundedContext attributeMap"
+		# will include the AuditField attributes at this location, keeping the
+		# record order
+        !include AuditField     "Expand the record in-line"
+
 
     enum SchemaType:
         """the types of schemas - flat, hierarchical or relational"""
-        FLAT = 1
-        HIERARCHICAL = 2
-        CUSTOM = 3
 
-    valueObject DataTypes
+        NFLAT
+        HIERARCHICAL
+        CUSTOM
+
+
+    record DataTypes
         """The data types used by the models"""
+
         *code Code
         description Description
+		type enum DataTypeType:
+
+			INTEGER
+			FLOAT
+			DECIMAL
+			STRING
+			DATE
+			DATETIME
+
 
     record SchemaType:
         """the data types associated with different technologies"""
+
         *code Code
         name Name
         type SchemaType
         dataTypes *DataType
         !include AuditField
 
+
     enum LOVStatus:
-        *CANDIDATE = 0
-        IN_USE = 1
-        DEPRECATED = 2
+
+        CANDIDATE
+        IN_USE
+        DEPRECATED
+
 
     enum LOVTypeEnum:
-        NUMERIC = 0
-        STRING = 1
-        BOOL = 2
+
+        NUMERIC
+        STRING
+        BOOL
+
 
     record LOFType:
+
         *code Code
-        *boundedContext !BoundedContext(code)
+        *boundedContext !BoundedContext
         type LOVTypeEnum
         description Description
-        mandatory bool?
+        mandatory bool
         !include AuditField
 
 
-    valueObject LOVValues:
+    record LOVValues:
+
         *code Code
         type !LOVType
         value string(4000)
@@ -85,41 +132,47 @@ namespace com.accenture.imat:
         target_high_value string?(4000)
         target_low_value string?(4000)
 
+
     record ListOfValues:
-        """structure to store general domains (list of values"""
+        """structure to store general domains (list of values)"""
+
         *code Code
         description Description
         status LOVStatus
-        values *LOVValues?
+        values *LOVValues null
 
 
-    valueObject Attribute:
+    record Attribute:
         """Attribute of an entity"""
         name Name
-        description Description?
-        attributeMap *AttributeMap?
-        dataType !DataType(code)
+        description Description null
+        attributeMap *AttributeMap null
+        dataType !DataType
         isNull bool
         isPK bool
         order int
-        lenght int?
-        precision int?
-        scale int?
-        defaultValue string?(4000)
-        domain string?(4000)
-        list_of_values_code !ListOfValues?(code)
+        lenght int null
+        precision int null
+        scale int null
+        defaultValue string(4000) null
+        domain string(4000) null
+        list_of_values_code !ListOfValues null
+
 
     enum EntityType:
         """Following DDD, as Entity, Value Objecs and Aggregates.
         A custom type is also available for other types of entities"""
-        VALUE_OBJECT = 1
-        ENTITY = 2
-        AGGREGATE = 3
-        AGGREGATE_ROOT = 4
-        CUSTOM = 5
 
-    valueObject Entity:
+        VALUE_OBJECT
+        ENTITY
+        AGGREGATE
+        AGGREGATE_ROOT
+        CUSTOM
+
+
+    record Entity:
         """Entity being represented in the logical model"""
+
         *code Code
         name Name
         description Description?
@@ -127,7 +180,7 @@ namespace com.accenture.imat:
         attributeMap *AttributeMap?
         attributes *Attribute?
 
-    valueObject SchemaSource:
+    record SchemaSource:
         """Identify the source of the schema, as it comes from a pre-defined
         structure, lide a software package (SAP, SalesForce) or pre-existing
         legacy structures"""
@@ -139,12 +192,12 @@ namespace com.accenture.imat:
     record Schema:
         *name Name
         *version Version
-        *boundedContext !BoundedContext?
-        *namespace !Namespace(code)
+        *boundedContext !BoundedContext null
+        *namespace !Namespace null
         type !SchemaType
         attributeMap *AttributeMap
-        schemaSource SchemaSource?
-        entities *Entity?
+        schemaSource SchemaSource null
+        entities *Entity null
         !include AuditField
 
 

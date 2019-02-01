@@ -1,0 +1,18 @@
+from boleto import SolicitacaoOperacaoBoleto, BoletoSimulado, BeneficiarioInvalido, BoletoNaoSimulado
+
+INFO.TITLE = "Simulação de Boleto"
+INFO.DESCRIPTION = """
+ Requisição de simulação do boleto, retornando o boleto simulado
+ """
+INFO.VERSION = 0.1.0
+
+PATH_ROOT = "boleto"
+
+resource Boleto:
+    post:
+        """Informações referentes a boleto"""
+
+        request: SolicitacaoOperacaoBoleto
+        responses:
+            200: BoletoSimulado
+            401: [BeneficiarioInvalido, BoletoNaoSimulado]

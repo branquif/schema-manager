@@ -1,0 +1,13 @@
+"""Tipos relacionados ao beneficiário de títulos"""
+
+from comum import Pessoa, Endereco, ChaveConta
+
+type CodigoOperador String(9) "Código de identificação do usuário de acesso associado a uma Pessoa Física, representante do beneficiário quando este for Pessoa Jurídica."
+
+record Beneficiario:
+    beneficiario Pessoa "informações pessoais do beneficiário"
+    nomeCobranca String(80) "nome do beneficiario na cobranca, impresso no titulo"
+    chaveConta ChaveConta "informações da conta corrente do beneficiário"
+
+
+

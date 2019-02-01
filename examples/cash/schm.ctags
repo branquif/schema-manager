@@ -1,0 +1,10 @@
+# for schema-manager ctag generation
+--langdef=scheman
+--map-scheman=+.schm
+
+
+--regex-scheman=/^[[:blank:]]+record[[:blank:]]+([[:alpha:]]+):/\1/r,record/
+--regex-scheman=/^[[:blank:]]+enum[[:blank:]]+([[:alpha:]]+):/\1/e,enum/
+--regex-scheman=/^[[:blank:]]+type[[:blank:]]+([[:alpha:]]+)+[[:blank:]]/\1/t,type/
+
+

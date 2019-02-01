@@ -1,0 +1,30 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	/87ddb83/
+Beneficiario	./boleto.schm	/^	record Beneficiario:$/;"	r
+Boleto	./boleto.schm	/^	record Boleto:$/;"	r
+ChaveConta	./boleto.schm	/^	record ChaveConta:$/;"	r
+Codigo	./comum.schm	/^    type Codigo String(9) "Codigo de identificação da entidade. Normalmente um mnemonico"$/;"	t
+Endereco	./boleto.schm	/^	record Endereco:$/;"	r
+Erro	./comum.schm	/^	record Erro:$/;"	r
+IndicadorSolicitacaoBoleto	./boleto.schm	/^	type IndicadorSolicitacaoBoleto TipoSolicitacaoBoleto:$/;"	t
+Juros	./boleto.schm	/^	record Juros: "Descreve o tipo de juros cobrado sobre o valor do boleto"$/;"	r
+MensagemBoleto	./boleto.schm	/^	record MensagemBoleto:$/;"	r
+MensagemEMail	./boleto.schm	/^	record MensagemEMail:$/;"	r
+Multa	./boleto.schm	/^	record Multa:$/;"	r
+Negativacao	./boleto.schm	/^	record Negativacao:$/;"	r
+NomeCompleto	./comum.schm	/^    type NomeCompleto String(80) "Designa nomes completos de entidades, como pessoas e cidades"$/;"	t
+Pagamento	./boleto.schm	/^	record Pagamento:$/;"	r
+PagamentoParcial	./boleto.schm	/^	record PagamentoParcial:$/;"	r
+Percentual	./comum.schm	/^	type Percentual Decimal(6,3) "Percentual, 999.999%"""$/;"	t
+Pessoa	./boleto.schm	/^	record Pessoa:$/;"	r
+Protesto	./boleto.schm	/^	record Protesto:$/;"	r
+TipoEspecieTitulo	./boleto.schm	/^	enum TipoEspecieTitulo:$/;"	e
+TipoPagamento	./boleto.schm	/^	enum TipoPagamento:$/;"	e
+TipoSolicitacaoBoleto	./boleto.schm	/^	enum TipoSolicitacaoBoleto:$/;"	e
+ValorMonetario	./comum.schm	/^    type ValorMonetario Decimal(12,2) "Representação de valores no formato 999999999.99"$/;"	t
+tipoModoEnvio	./boleto.schm	/^	enum tipoModoEnvio:$/;"	e

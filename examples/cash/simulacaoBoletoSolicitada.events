@@ -1,0 +1,43 @@
+"""Eventos associados ao tópico de Transaction Server de boleto"""
+
+from comum import EventHeader
+from boleto import SolicitacaoOperacaoBoletoAPI, SolicitacaoOperacaoBoletoComum, SolicitacaoOperacaoBoletoExpresso
+INFO.TITLE = "Eventos - Transaction Server"
+INFO.DESCRIPTION = """
+ Eventos referentes ao microsserviço Transaction Server
+
+ Eventos Escutados: BoletoNaoSimulado e BeneviciarioInvalido
+ Evento Gerado: SimulacaoBoletoSolicitada
+ """
+INFO.VERSION = 0.1.0
+
+PATH_ROOT = "boleto"
+
+event SimulacaoBoletoSolicitada:
+    header:
+        EventHeader
+
+    partitionKey:
+        ...
+    
+    body:
+        SolicitacaoOperacaoBoletoExpresso
+
+event BoletoNaoSimulado:
+    header:
+        EventHeader
+
+    partitionKey:
+        ...
+    
+    body:
+
+event BeneviciarioInvalido:
+    header:
+        EventHeader
+
+    partitionKey:
+        ...
+    
+    body:
+
