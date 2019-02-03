@@ -1,0 +1,27 @@
+namespace com.accenture.deployControlTool {
+
+	record Service {
+	"""The service definition"""
+		id	uuid primary_key
+		code string(15) "the service code or acronym"
+		name string(256)
+		description string
+	}
+
+	record ServiceVersion {
+		"""Describes the service version"""
+		id uuid primary_key
+		version_name string(400)
+		description string
+		service Service foreign_key(id)
+	}
+
+	record serviceVersion {
+		"""which version of the service"""
+	}
+
+	record environment {
+		"""Describes the environmnet
+	}
+}
+

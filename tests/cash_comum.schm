@@ -1,0 +1,176 @@
+namespace com.itau.cash.comum:
+	"""Tipos comuns utilizados na comunidade de CASH"""
+
+
+
+
+    type Codigo String(9) "Codigo de identificação da entidade. Normalmente um mnemonico"
+
+    type NomeCompleto String(80) "Designa nomes completos de entidades, como pessoas e cidades"
+
+	type Percentual Decimal(6,3) "Percentual, 999.999%"""
+
+    type ValorMonetario Decimal(12,2) "Representação de valores no formato 999999999.99"
+
+	record Erro:
+		"""Descrição do erro"""
+		codigoErro Code "codigo do erro"
+		mensagemErro string(255) "descrição do erro"
+
+
+namespace com.itau.cash.titulo:
+
+
+	enum tipoSolicitacaoBoleto:
+		""indica o tipo da simulação sendo efetuada"""
+
+		Simulacao
+		Execucao
+
+
+	type indicadorSolicitacaoBoleto tipoSolicitacaoBoleto "Indica qual tipo de solicitação é para ser tratada"
+
+	record MensagemEMail:
+		"""mensagem de email a ser enviada"""
+
+		assuntoEmail string(255)
+		corpoEmail string(4000) "corpo do email a ser enviado, em texto"
+		MIMEType MIMEType
+
+	record Endereco:
+		logradouro String(255)
+		bairro String(255)
+		cidade String(255)
+		UF String(2)
+		CEP String(2)
+
+	record Pessoa:
+		nome Nome "Nome completo da pessoa"
+		documentoLegal	String(25) "Pode ser o CPF ou CNPJ"
+		tipoDocumentoLegal enumn TipoDocumentoLegal:
+			CPF
+			CNPJ
+		email String(255) null
+		endereco !Endereco
+
+	record ChaveConta:
+		"""Identificação de conta"""
+
+		numeroInstituicaoFinanceira String(10) "numero da instituicao financeira"
+		digitoVerificadorInstituicao_financeira String(2)
+		numeroAgencaBancaria String(12)
+		numeroConta String(15)
+		digitoVerificadorConta String(2)
+
+	record Beneficiario:
+		pessoa Pessoa
+		nomeFantasia String(255) null
+		nomeCobranca String(255) "nome do beneficiário na cobranca, impresso no titulo"
+		conta ChaveConta
+
+	record PagamentoParcial:
+		permitePagamentoParcial Bool null "indicador se é possível pagamento parcelado"
+		quantidadePagamentoParcial Integer null "quantidade permitida de pagamentos no pagamento parcial"
+		quantidadeParcelas Integer null "Quantidade total de parcelas que o título geral disponível"
+
+	record Juros: "Descreve o tipo de juros cobrado sobre o valor do boleto"
+		data Date "Data a partir da qual o juro será cobrado"
+		tipoJuro enum TipoJuro: "Tipo de juros a ser cobrado
+			SIMPLES
+			COMPOSTO
+		percentualJuros Percentual "Percentual a ser calculado na cobrança de multa"
+
+	record Multa:
+		"""Descreve o tipo de juros cobrado sobre o valor do boleto"""
+
+		data Date "Data a partir da qual a multa será cobrada sobre o valor do boleto"
+		tipoMulta enum	TipoMulta:
+			"""Tipo de multa a ser aplicada a partir de determinada data"""
+
+			xxx
+			yyy
+
+		valor Dinheiro "Valor da multa a ser aplicada."
+		percentualMulta	Percentual	"Percentual a ser calculado para cobrança de multa"
+
+	record RecebimentoDivergente
+		"""Guarda as informações referente a recebimento divergente (valor a ser pago diferente do valor do boleto)"""
+
+		tipoAutorizacao enum TipooAutorizacao:
+			"""Tipo de autorização de recebimento divergente da cobrança."""
+
+			xxx
+			yyy
+			zzz
+
+		tipoValorPercentual enum TipoValorPercentual: # review(FB): isso realmente é um enum?
+			"""Valor percentual a ser recebido em cima do valor do título"""
+
+			xxx
+			yyy
+		valorMinimo Dinheiro "Valor mínimo para pagamento"
+		percentualMinimo Dinheiro "Valor percentual mínimo a ser recebido em cima do valor do título"
+		valorMaximo Dinheiro "Valor máximo para pagamento"
+		percentualMaximo Decimal "Valor percentual máximo a ser recebido em cima do valor do título"""
+
+	record Negativacao:
+		"""Guarda as informações a respeito da negativação do pagador"""
+
+		negativado Bool "Indica se haverá ou não a negativação do pagador frente ao não pagamento do boleto."
+		qtdeDiasParaNegativar Integer null "Quantidade de dias para se negativar o pagador"
+
+
+	record Protesto:
+		"""Guarda as informações a respeito se o protesto será ou não efetuado."""
+
+		protestado Bool "Indica se haverá ou não o protesto frente ao não pagamento do boleto"
+		qtdeDiasParaProtestar Integer "Quantidade de dias para se protestar o título"
+
+	record Desconto
+		"""Descreve os descontos a serem aplicados sobre o valor do boleto até determinada data"""
+
+		data Date "Data até a qual o desconto será aplicado"
+		tipoDesconto enum TipoDesconto:
+			"""Tipo de desconto a ser concedido"""
+
+			XXX
+			sss
+
+		valorDesconto Dinheiro "Valor do desconto a ser concedido"
+		percentualDesconto Percentual "Percentual  de desconto a ser concedido"
+
+	record MensagemBoleto:
+		"""Mensagem que aparece no boleto"""
+
+		mensagem String(100)
+
+	record Boleto:
+		*id UUID "identificador no sistema do boleto"
+		estado String(40) "estado do boleto, como 'beneficiário criado', 'boleto validado'"
+		tipoCarteiraTitulo String(10) null
+		nossoNumero String(40) null
+		codigoBarras String(40) null "Representacao gráfica ..."
+		numeroLinhaDigitavel String(40) null "Representação numérica do código de barras"
+		dataVencimento Date "Último dia para pagamento do título sem acréscimo de multa, juros e outros"
+		valorTitulo Dinheiro "Valor a ser pago"
+		seuNumero string(40) "Chave que compõe o boleto"
+		especie String(40) "codigo espécie do título"
+		dataEmissao Date null "data na qual o boleto foi emitido pelo cliente"
+		dataLimitePagamento Date "Último dia para pagamento do título. A partir desta data não é mais possível efetuar o pagamento do boleto."
+		tipoPagamento enum	TipoPagamento:
+			xxx
+			xxx
+		pagamentoParcial PagamentoParcial null
+		valorAbatimento Dinheiro null "Valor do abatimento do título. O sistema limita o esconto concedido a 90% do valor do título.
+		juros *Juros null #Review(FB): São muitos juros? precisa de um texto explicativo aqui
+		multa *Multa null #Review(FB): São muitas multas? se sim, precisa explicar como funciona aqui
+		descontos *Desconto null
+		divergencias RecebimentoDivergente
+		listaTextoMensagemBoleto *(10)MensagemBoleto
+
+#Revies(FB): Não vi onde se usa Protesto
+
+
+
+
+

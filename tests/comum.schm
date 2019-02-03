@@ -1,0 +1,11 @@
+type Codigo String(2):
+    """short string, usually a mnemonic, used as alternate key or primary
+    key when referencial static data"""
+
+type Nome String(80) "Nome Completo"
+
+type Percentual Decimal(12,5) "Percentual, 9999999.99999%"
+
+type Dinheiro Decimal(19,2):
+    """Tipo Decimal que representa valor monetário com precisão de 19, e duas casas decimais"""
+

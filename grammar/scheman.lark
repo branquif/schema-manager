@@ -1,0 +1,139 @@
+//////////////////////////////
+//
+// Schema manager parser language
+// still in alpha state
+//
+/////////////////////////////
+
+///////////////////
+//
+// Rules
+//
+//////////////////
+
+?start: _NEWLINE* types*
+
+types: typedef _NEWLINE*
+
+bool_type: "Bool"
+int_type: "Int"
+long_type: "Long"
+float_type: "Float"
+double_type: "Double"
+uuid_type: "UUID"
+byte_type: "Byte"
+date_type: "Date"
+time_type: "Time"
+datetime_type: "Datetime"
+
+
+simple_type_base: bool_type
+			| int_type
+			| long_type
+			| float_type
+			| double_type
+			| uuid_type
+			| byte_type
+			| date_type
+			| time_type
+			| datetime_type
+
+simple_type_base_optional: simple_type_base "?"
+
+simple_type_string: "String"
+simple_type_string_optional: simple_type_string "?"
+simple_type_string_sized: (simple_type_string | simple_type_string_optional) "(" INT ")"
+
+simple_type_decimal: "Decimal"
+simple_type_decimal_optional: simple_type_decimal "?"
+simple_type_decimal_sized: (simple_type_decimal | simple_type_string_optional) "(" INT "," INT ")"
+
+simple_type: (simple_type_base | simple_type_base_optional | simple_type_string_sized | simple_type_decimal_sized)
+
+inline_attrib_doc: INLINE_STRING
+multiline_attrib_doc: ":" _NEWLINE _INDENT MULTILINE_STRING _NEWLINE _DEDENT
+
+attrib_doc: inline_attrib_doc | multiline_attrib_doc
+
+typedef: "type" NAME simple_type [attrib_doc]
+
+//attribdef: "!include" NAME
+//			| ["*"]NAME (simple_type ["default" "(" VALUE ")"] | complex_type) [attrib_doc]
+//
+//multiline_record_doc: _NEWLINE MULTILINE_STRING
+//
+//recorddef: "record" NAME ":" recordsuite
+//
+//
+//?stmt: simple_stmt | compound_stmt
+//?simple_stmt: small_stmt (";" small_stmt)* [";"] _NEWLINE
+//?small_stmt: (expr_stmt | del_stmt | pass_stmt | flow_stmt | import_stmt | global_stmt | nonlocal_stmt | assert_stmt)
+//?expr_stmt: testlist_star_expr (annassign )
+//
+//suite: simple_stmt | _NEWLINE _INDENT stmt+ _DEDENT
+
+
+string: INLINE_STRING | MULTILINE_STRING
+
+///////////////////
+//
+// Tokens
+//
+//////////////////
+
+
+//
+// Numbers
+//
+
+DIGIT: "0".."9"
+HEXDIGIT: "a".."f" | "A".."F" | DIGIT
+
+INT: DIGIT+
+SIGNED_INT: ["+" | "-"] INT
+DECIMAL: INT "." INT? | "." INT
+
+// float = /-?\d+(\.\d+)?([eE][+-]?\d+)?/
+_EXP: ("e" | "E") SIGNED_INT
+FLOAT: INT _EXP | DECIMAL _EXP?
+SIGNED_FLOAT: ["+" | "-"] FLOAT
+
+NUMBER: FLOAT | INT
+SIGNED_NUMBER: ["+" | "-"] NUMBER
+
+//
+// Strings
+//
+
+INLINE_STRING : /[ubf]?r?("(?!"").*?(?<!\\)(\\\\)*?"|'(?!'').*?(?<!\\)(\\\\)*?')/i
+MULTILINE_STRING: /[ubf]?r?(""".*?(?<!\\)(\\\\)*?"""|'''.*?(?<!\\)(\\\\)*?''')/is
+
+//
+// Names (Variables)
+//
+
+LCASE_LETTER: "a".."z"
+UCASE_LETTER: "A".."Z"
+
+LETTER: UCASE_LETTER | LCASE_LETTER
+WORD: LETTER+
+
+NAME: ("_" | LETTER) ("_" | LETTER | DIGIT)*
+
+VALUE: /"(.?)"/
+
+//NAME: /[a-zA-Z_]\w*/
+
+//
+// Whitespace
+//
+
+COMMENT: /#[^\n]*/
+_NEWLINE: ( /\r?\n[\t ]*/ | COMMENT )+
+
+
+
+%ignore /[\t \f]+/  // WS
+%ignore /\\[\t \f]*\r?\n/   // LINE_CONT
+%ignore COMMENT
+%declare _INDENT _DEDENT
