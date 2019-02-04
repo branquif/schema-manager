@@ -11,9 +11,129 @@
 //
 //////////////////
 
-?start: _NEWLINE* types*
+//?start: _NEWLINE* _types*
+//_types: typedef _NEWLINE*
+?start: (_NEWLINE | stmt)*
 
-types: typedef _NEWLINE*
+decorator: "@" dotted_name [ "(" [arguments] ")" ] _NEWLINE
+decorators: decorator+
+decorated: decorators (classdef )
+
+parameters: paramvalue ("," paramvalue)*
+
+?paramvalue: typedparam ["=" test]
+?typedparam: NAME [":" test]
+
+
+
+varargslist: (vfpdef ["=" test] ("," vfpdef ["=" test])* ["," [ "*" [vfpdef] ("," vfpdef ["=" test])* ["," ["**" vfpdef [","]]] | "**" vfpdef [","]]]
+  | "*" [vfpdef] ("," vfpdef ["=" test])* ["," ["**" vfpdef [","]]]
+  | "**" vfpdef [","])
+
+vfpdef: NAME
+
+?stmt: simple_stmt | compound_stmt
+?simple_stmt: small_stmt (";" small_stmt)* [";"] _NEWLINE
+?small_stmt: (expr_stmt | import_stmt )
+
+?expr_stmt: testlist_star_expr (annassign | augassign testlist
+         | ("=" testlist_star_expr)*)
+annassign: ":" test ["=" test]
+?testlist_star_expr: (test|star_expr) ("," (test|star_expr))* [","]
+!augassign: ("+=" | "-=" | "*=" | "@=" | "/=" | "%=" | "&=" | "|=" | "^=" | "<<=" | ">>=" | "**=" | "//=")
+// For normal and annotated assignments, additional restrictions enforced by the interpreter
+?flow_stmt: return_stmt
+return_stmt: "return" [testlist]
+import_stmt: import_name | import_from
+import_name: "import" dotted_as_names
+// note below: the ("." | "...") is necessary because "..." is tokenized as ELLIPSIS
+import_from: "from" (dots? dotted_name | dots) "import" ("*" | "(" import_as_names ")" | import_as_names)
+!dots: "."+
+import_as_name: NAME ["as" NAME]
+dotted_as_name: dotted_name ["as" NAME]
+import_as_names: import_as_name ("," import_as_name)* [","]
+dotted_as_names: dotted_as_name ("," dotted_as_name)*
+dotted_name: NAME ("." NAME)*
+
+compound_stmt: typedef | enumdef | if_stmt | while_stmt | for_stmt | try_stmt | with_stmt | classdef | decorated
+if_stmt: "if" test ":" suite ("elif" test ":" suite)* ["else" ":" suite]
+while_stmt: "while" test ":" suite ["else" ":" suite]
+for_stmt: "for" exprlist "in" testlist ":" suite ["else" ":" suite]
+try_stmt: ("try" ":" suite ((except_clause ":" suite)+ ["else" ":" suite] ["finally" ":" suite] | "finally" ":" suite))
+with_stmt: "with" with_item ("," with_item)*  ":" suite
+with_item: test ["as" expr]
+// NB compile.c makes sure that the default except clause is last
+except_clause: "except" [test ["as" NAME]]
+suite: simple_stmt | _NEWLINE _INDENT stmt+ _DEDENT
+
+?test: or_test ["if" or_test "else" test]
+?test_nocond: or_test
+?or_test: and_test ("or" and_test)*
+?and_test: not_test ("and" not_test)*
+?not_test: "not" not_test -> not
+         | comparison
+?comparison: expr (_comp_op expr)*
+star_expr: "*" expr
+?expr: xor_expr ("|" xor_expr)*
+?xor_expr: and_expr ("^" and_expr)*
+?and_expr: shift_expr ("&" shift_expr)*
+?shift_expr: arith_expr (_shift_op arith_expr)*
+?arith_expr: term (_add_op term)*
+?term: factor (_mul_op factor)*
+?factor: _factor_op factor
+
+!_factor_op: "+"|"-"|"~"
+!_add_op: "+"|"-"
+!_shift_op: "<<"|">>"
+!_mul_op: "*"|"@"|"/"|"%"|"//"
+// <> isn't actually a valid comparison operator in Python. It's here for the
+// sake of a __future__ import described in PEP 401 (which really works :-)
+!_comp_op: "<"|">"|"=="|">="|"<="|"<>"|"!="|"in"|"not" "in"|"is"|"is" "not"
+
+?atom_expr: atom_expr "(" [arguments] ")"      -> funccall
+          | atom_expr "[" subscriptlist "]"  -> getitem
+          | atom_expr "." NAME               -> getattr
+          | atom
+
+?atom: "(" [testlist_comp] ")" -> tuple
+     | "[" [testlist_comp] "]"  -> list
+     | "{" [dictorsetmaker] "}" -> dict
+     | NAME -> var
+     | number | string+
+     | "(" test ")"
+     | "..." -> ellipsis
+     | "None"    -> const_none
+     | "True"    -> const_true
+     | "False"   -> const_false
+
+?testlist_comp: (test|star_expr) [("," (test|star_expr))+ [","] | ","]
+subscriptlist: subscript ("," subscript)* [","]
+subscript: test | [test] ":" [test] [sliceop]
+sliceop: ":" [test]
+exprlist: (expr|star_expr) ("," (expr|star_expr))* [","]
+testlist: test ("," test)* [","]
+dictorsetmaker: ( ((test ":" test | "**" expr) (("," (test ":" test | "**" expr))* [","])) | ((test | star_expr) ( ("," (test | star_expr))* [","])) )
+
+classdef: "class" NAME ["(" [arguments] ")"] ":" suite
+
+arguments: argvalue ("," argvalue)*  ["," [ starargs | kwargs]]
+         | starargs
+         | kwargs
+
+starargs: "*" test ("," "*" test)* ("," argvalue)* ["," kwargs]
+kwargs: "**" test
+
+?argvalue: test ["=" test]
+
+string: INLINE_STRING | MULTILINE_STRING
+number: NUMBER
+
+
+///////////////////
+//
+// specific for the schema manager parser
+//
+//////////////////
 
 bool_type: "Bool"
 int_type: "Int"
@@ -25,9 +145,23 @@ byte_type: "Byte"
 date_type: "Date"
 time_type: "Time"
 datetime_type: "Datetime"
+string_type: "String"
+decimal_type: "Decimal"
 
+opt_bool_type: "Bool?"
+opt_int_type: "Int?"
+opt_long_type: "Long?"
+opt_float_type: "Float?"
+opt_double_type: "Double?"
+opt_uuid_type: "UUID?"
+opt_byte_type: "Byte?"
+opt_date_type: "Date?"
+opt_time_type: "Time?"
+opt_datetime_type: "Datetime?"
+opt_string_type: "String?"
+opt_decimal_type: "Decimal?"
 
-simple_type_base: bool_type
+?simple_type_base: bool_type
 			| int_type
 			| long_type
 			| float_type
@@ -37,43 +171,40 @@ simple_type_base: bool_type
 			| date_type
 			| time_type
 			| datetime_type
+			| string_type
+			| decimal_type
 
-simple_type_base_optional: simple_type_base "?"
+?simple_type_base_opt: opt_bool_type
+			| opt_int_type
+			| opt_long_type
+			| opt_float_type
+			| opt_double_type
+			| opt_uuid_type
+			| opt_byte_type
+			| opt_date_type
+			| opt_time_type
+			| opt_datetime_type
+			| opt_string_type
+			| opt_decimal_type
 
-simple_type_string: "String"
-simple_type_string_optional: simple_type_string "?"
-simple_type_string_sized: (simple_type_string | simple_type_string_optional) "(" INT ")"
+sized_string_type: (string_type | opt_string_type) "(" INT ")"
 
-simple_type_decimal: "Decimal"
-simple_type_decimal_optional: simple_type_decimal "?"
-simple_type_decimal_sized: (simple_type_decimal | simple_type_string_optional) "(" INT "," INT ")"
+sized_decimal_type: (decimal_type | opt_decimal_type) "(" INT "," INT ")"
 
-simple_type: (simple_type_base | simple_type_base_optional | simple_type_string_sized | simple_type_decimal_sized)
+// TODO: evaluate if need to be inline - check after derinition or record (for
+// type definitions it would work fine!
+?simple_type: (simple_type_base | simple_type_base_opt | sized_string_type | sized_decimal_type)
 
-inline_attrib_doc: INLINE_STRING
-multiline_attrib_doc: ":" _NEWLINE _INDENT MULTILINE_STRING _NEWLINE _DEDENT
+inline_doc: INLINE_STRING
+multiline_doc:  MULTILINE_STRING _NEWLINE
 
-attrib_doc: inline_attrib_doc | multiline_attrib_doc
+?element_doc: inline_doc | ":" _NEWLINE _INDENT multiline_doc _DEDENT
 
-typedef: "type" NAME simple_type [attrib_doc]
+typedef: "type" NAME simple_type [element_doc]
 
-//attribdef: "!include" NAME
-//			| ["*"]NAME (simple_type ["default" "(" VALUE ")"] | complex_type) [attrib_doc]
-//
-//multiline_record_doc: _NEWLINE MULTILINE_STRING
-//
-//recorddef: "record" NAME ":" recordsuite
-//
-//
-//?stmt: simple_stmt | compound_stmt
-//?simple_stmt: small_stmt (";" small_stmt)* [";"] _NEWLINE
-//?small_stmt: (expr_stmt | del_stmt | pass_stmt | flow_stmt | import_stmt | global_stmt | nonlocal_stmt | assert_stmt)
-//?expr_stmt: testlist_star_expr (annassign )
-//
-//suite: simple_stmt | _NEWLINE _INDENT stmt+ _DEDENT
+symbol: NAME [inline_doc] _NEWLINE
+enumdef: "enum" NAME ":" _NEWLINE+ _INDENT [multiline_doc] symbol+ _DEDENT
 
-
-string: INLINE_STRING | MULTILINE_STRING
 
 ///////////////////
 //
@@ -119,10 +250,7 @@ LETTER: UCASE_LETTER | LCASE_LETTER
 WORD: LETTER+
 
 NAME: ("_" | LETTER) ("_" | LETTER | DIGIT)*
-
-VALUE: /"(.?)"/
-
-//NAME: /[a-zA-Z_]\w*/
+SYMBOL: ("_" | UCASE_LETTER) ("_" | UCASE_LETTER | DIGIT)*
 
 //
 // Whitespace
@@ -137,3 +265,4 @@ _NEWLINE: ( /\r?\n[\t ]*/ | COMMENT )+
 %ignore /\\[\t \f]*\r?\n/   // LINE_CONT
 %ignore COMMENT
 %declare _INDENT _DEDENT
+

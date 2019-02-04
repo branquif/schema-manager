@@ -1,49 +1,73 @@
-type inttype Int "tipo inteiro"
-type booltype Bool "tipo booleano"
-type logtype Long "tipo inteiro longo"
+#this is a comment
 
-type floattype Float "float type"
+# type inttype Int "tipo inteiro"
+# type booltype Bool "tipo booleano"
+# type logtype Long "tipo inteiro longo"
 
-type doubletype Double "double type"
+# type floattype Float "float type"
 
-type uuidtype UUID "uuid type"
+# type doubletype Double "double type"
 
-type bytetype Byte "byte type"
+# type uuidtype UUID "uuid type"
 
-type datetype Date "date type"
+# type bytetype Byte "byte type"
 
-type timetype Time "time type"
+# type datetype Date "date type"
+
+# type timetype Time "time type"
 
 type datetimetype Datetime "datetime type"
 
 
-type inttype Int? "tipo inteiro"
-type booltype Bool? "tipo booleano"
-type logtype Long? "tipo inteiro longo"
+# type inttypeO Int? "tipo inteiro"
+# type booltypeO Bool? "tipo booleano"
+# type logtypeO Long? "tipo inteiro longo"
 
-type floattype Float? "float type"
+# type floattypeO Float? "float type"
 
-type doubletype Double? "double type"
+# type doubletypeO Double? "double type"
 
-type uuidtype UUID? "uuid type"
+# type uuidtypeO UUID? "uuid type"
 
-type bytetype Byte? "byte type"
+# type bytetypeO Byte? "byte type"
 
-type datetype Date? "date type"
+# type datetypeO Date? "date type"
 
-type timetype Time? "time type"
+# type timetypeO Time? "time type"
 
-type datetimetype Datetime? "datetime type"
+type datetimetypeO Datetime? "datetime type"
 
 
-type Codigo String(2):
-    """short string, usually a mnemonic, used as alternate key or primary
-    key when referencial static data"""
+# type Codigo String(2):
+#     """short string, usually a mnemonic, used as alternate key or primary
+#     key when referencial static data"""
 
-type Nome String(80) "Nome Completo"
 
-type Percentual Decimal(12,5) "Percentual, 9999999.99999%"
+# type Nome String(80) "Nome Completo"
+
+# type lnae String 
+
+# type Percentual Decimal(12,5) "Percentual, 9999999.99999%"
 
 type Dinheiro Decimal(19,2):
-    """Tipo Decimal que representa valor monetário com precisão de 19, e duas casas decimais"""
+	"""Tipo Decimal que representa valor monetário com precisão de 19, e duas casas decimais"""
+
+
+# record Order:
+# 	"""order record
+# 	can check later"""
+
+enum Suite:
+	"""testing"""
+ 	SPADES
+
+ 	DIAMONDS
+ 	CLUBS "Clubs suit"
+ 	HEARTS "Hearts suit"
+
+
+type CodigoO String?(2):
+    """short string, usually a mnemonic, used as alternate key or primary
+    key when 
+	referencial static data"""
 

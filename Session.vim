@@ -7,24 +7,43 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +155 imat.schm
+badd +19 grammar/scheman.lark
 argglobal
 silent! argdel *
-edit imat.schm
+edit grammar/scheman.lark
 set splitbelow splitright
+wincmd _ | wincmd |
+split
+1wincmd k
+wincmd w
 wincmd t
 set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
+exe '1resize ' . ((&lines * 39 + 41) / 83)
+exe '2resize ' . ((&lines * 39 + 41) / 83)
 argglobal
-let s:l = 1 - ((0 * winheight(0) + 16) / 33)
+let s:l = 59 - ((22 * winheight(0) + 19) / 39)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
-normal! 0
+59
+normal! 024|
 lcd ~/Dropbox/swf_projects/schema-manager
+wincmd w
+argglobal
+if bufexists('~/Dropbox/swf_projects/schema-manager/grammar/scheman.lark') | buffer ~/Dropbox/swf_projects/schema-manager/grammar/scheman.lark | else | edit ~/Dropbox/swf_projects/schema-manager/grammar/scheman.lark | endif
+let s:l = 206 - ((18 * winheight(0) + 19) / 39)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+206
+normal! 057|
+lcd ~/Dropbox/swf_projects/schema-manager
+wincmd w
+exe '1resize ' . ((&lines * 39 + 41) / 83)
+exe '2resize ' . ((&lines * 39 + 41) / 83)
 tabnext 1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
