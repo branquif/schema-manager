@@ -1,0 +1,190 @@
+
+
+
+start
+  Module(name='type_test', doc={'doc': '\nthis is tye type test module\nwe will test lots of possibilities\n'}, element_type=<ElTp.MODULE: 5>, children=set(), imports=[{'common': [{Token(NAME, 'A'): Token(NAME, 'typeA')}, {Token(NAME, 'B'): Token(NAME, 'typeB')}]}, {'commonBB': [{Token(NAME, 'C'): Token(NAME, 'typeC')}, {Token(NAME, 'Block'): Token(NAME, 'typeBlock')}]}])
+  {'usertype_name': Token(NAME, 'Inteiro'), 'type_properties': ({'type_name': 'com.a.int', 'properties': ({'min_value': 20},)},)}
+  {'usertype_name': Token(NAME, 'Booltype'), 'type_properties': ({'type_name': 'com.BOOL', 'properties': ({'default_value': True},)},)}
+  {'usertype_name': Token(NAME, 'logtype'), 'type_properties': ({'type_name': 'Long', 'properties': ({'min_value': 2}, {'max_value': 234})},)}
+  {'usertype_name': Token(NAME, 'floattype'), 'type_properties': ({'type_name': 'com.Float', 'properties': ()}, {'doc': 'float type'})}
+  {'usertype_name': Token(NAME, 'doubletype'), 'type_properties': ({'type_name': 'Double', 'properties': ({'min_value': Decimal('0.43234234')}, {'max_value': Decimal('10.32')})}, {'doc': 'double type'})}
+  {'usertype_name': Token(NAME, 'ts'), 'type_properties': ({'type_name': 'timestamp', 'properties': ()},)}
+  {'usertype_name': Token(NAME, 'tstz'), 'type_properties': ({'type_name': 'timestamptz', 'properties': ()},)}
+  {'usertype_name': Token(NAME, 'ti'), 'type_properties': ({'type_name': 'time', 'properties': ()},)}
+  {'usertype_name': Token(NAME, 'titz'), 'type_properties': ({'type_name': 'timetz', 'properties': ()},)}
+  {'usertype_name': Token(NAME, 'kk'), 'type_properties': ({'type_name': 'int', 'properties': ()},)}
+  {'usertype_name': Token(NAME, 'str'), 'type_properties': ({'type_name': 'string', 'properties': ('opt', {'precision_x': 10}, {'precision_y': 100}, {'default_value': ''})}, {'doc': 'testando'})}
+  {'usertype_name': Token(NAME, 'txt'), 'type_properties': ({'type_name': 'String', 'properties': ()},)}
+  {'usertype_name': Token(NAME, 'uuidtype'), 'type_properties': ({'type_name': 'UUID', 'properties': ()}, {'doc': 'uuid type'})}
+  {'usertype_name': Token(NAME, 'datetype'), 'type_properties': ({'type_name': 'Date', 'properties': ()}, {'doc': 'date type'})}
+  {'usertype_name': Token(NAME, 'timetype'), 'type_properties': ({'type_name': 'Time', 'properties': ()}, {'doc': 'time type'})}
+  {'usertype_name': Token(NAME, 'datetimetype'), 'type_properties': ({'type_name': 'Timestamp', 'properties': ()}, {'doc': 'datetime type asdfadsf fdsdf'})}
+  {'usertype_name': Token(NAME, 'inttypeO'), 'type_properties': ({'type_name': 'Int', 'properties': ('opt',)}, {'doc': 'tipo inteiro'})}
+  {'usertype_name': Token(NAME, 'booltypeO'), 'type_properties': ({'type_name': 'com.Bool', 'properties': ('opt',)}, {'doc': 'tipo booleano'})}
+  {'usertype_name': Token(NAME, 'logtypeO'), 'type_properties': ({'type_name': 'Long', 'properties': ('opt',)}, {'doc': 'tipo inteiro longo'})}
+  {'usertype_name': Token(NAME, 'floattypeO'), 'type_properties': ({'type_name': 'Float', 'properties': ('opt',)}, {'doc': 'float type'})}
+  {'usertype_name': Token(NAME, 'doubletypeO'), 'type_properties': ({'type_name': 'Double', 'properties': ('opt',)}, {'doc': 'double type'})}
+  {'usertype_name': Token(NAME, 'uuidtypeO'), 'type_properties': ({'type_name': 'UUID', 'properties': ('opt',)}, {'doc': 'uuid type'})}
+  {'usertype_name': Token(NAME, 'bytetypeO'), 'type_properties': ({'type_name': 'Byte', 'properties': ('opt',)}, {'doc': 'byte type'})}
+  {'usertype_name': Token(NAME, 'datetypeO'), 'type_properties': ({'type_name': 'Date', 'properties': ('opt',)}, {'doc': 'date type'})}
+  {'usertype_name': Token(NAME, 'datetimetypeO'), 'type_properties': ({'type_name': 'Timestamp', 'properties': ('opt',)}, {'doc': 'datetime \n\n\ttype'})}
+  {'usertype_name': Token(NAME, 'timetypeO'), 'type_properties': ({'type_name': 'Time', 'properties': ('opt',)}, {'doc': 'time type'})}
+  {'usertype_name': Token(NAME, 'Codigo'), 'type_properties': ({'type_name': 'String', 'properties': ({'precision_y': 2},)}, {'doc': 'short string, usually a mnemonic, used as alternate key or primary\n    key when referencial static data'})}
+  {'usertype_name': Token(NAME, 'Nome'), 'type_properties': ({'type_name': 'String', 'properties': ({'precision_y': 80},)}, {'doc': 'Nome Completo'})}
+  {'usertype_name': Token(NAME, 'lnae'), 'type_properties': ({'type_name': 'String', 'properties': ()},)}
+  {'usertype_name': Token(NAME, 'Percentual'), 'type_properties': ({'type_name': 'Decimal', 'properties': ({'precision_x': 12}, {'precision_y': 5})}, {'doc': 'Percentual, 9999999.99999%'})}
+  {'usertype_name': Token(NAME, 'Dinheiro'), 'type_properties': ({'type_name': 'Decimal', 'properties': ({'precision_x': 19}, {'precision_y': 2})}, {'doc': 'Tipo Decimal que representa valor monetário com precisão de 19, e duas casas decimais'})}
+  enum_def
+    Suite
+    symbols
+      {'doc': 'testing\n\t1234'}
+      symbol	SPADES
+      symbol	DIAMONDS
+      symbol
+        CLUBS
+        "Clubs suit"
+      symbol
+        HEARTS
+        "Hearts suit"
+  {'usertype_name': Token(NAME, 'CodigoO'), 'type_properties': ({'type_name': 'String', 'properties': ('opt', {'precision_y': 2})}, {'doc': 'short string, usually a mnemonic, used as alternate key or primary\n    key when\n\treferencial static data'})}
+  constant_def
+    niente.nada
+    constant_value	"nothing at aall"
+  constant_def
+    zero
+    constant_value	0
+  constant_def
+    dot_one
+    constant_value	0.1
+  constant_def
+    symbol
+    constant_value	"""
+	this is a symbol
+	and it can be multiline"""
+  {'usertype_name': Token(NAME, 'cyclist'), 'type_properties': ({'type_name': Tree(map_type, ['string', 'datetimetz']), 'properties': ()},)}
+  {'usertype_name': Token(NAME, 'times'), 'type_properties': ({'type_name': Tree(set_type, ['datetimetz']), 'properties': ()},)}
+  record_def
+    Order
+    attributes
+      attribute
+        field1
+        {'type_name': 'Int', 'properties': ()}
+      attribute
+        field2
+        attribute_type
+          {'type_name': 'Timestamp', 'properties': ()}
+          {'doc': 'kkk\n\t\tasdfasdf'}
+      attribute
+        primary_key
+        field3
+        attribute_type
+          {'type_name': 'String', 'properties': ({'precision_y': 80},)}
+          {'doc': 'testing...'}
+      attribute
+        field4
+        {'type_name': 'String', 'properties': ({'precision_y': 2},)}
+  record_def
+    Order2
+    {'doc': 'order record can\n\tcheck later'}
+    attributes
+      attribute
+        field1
+        {'type_name': 'Int', 'properties': ()}
+      attribute
+        field2
+        attribute_type
+          {'type_name': 'Timestamp', 'properties': ()}
+          {'doc': 'kkk\n\t\tasdfasdf'}
+      attribute
+        primary_key
+        field3
+        attribute_type
+          {'type_name': 'String', 'properties': ({'precision_y': 80},)}
+          {'doc': 'testing...'}
+      discriminator_attrib
+        discriminator
+        qualif_o1
+      attribute
+        field4
+        {'type_name': 'String', 'properties': ({'precision_y': 2},)}
+  record_def
+    Order3
+    parent_records
+      xxx.Order1
+      parent_record
+        order2
+        discriminator_value	"o2"
+    {'doc': 'order record can\n\tcheck later'}
+    attributes
+      attribute
+        field1
+        {'type_name': 'Int', 'properties': ()}
+      attribute
+        field2
+        attribute_type
+          {'type_name': 'Timestamp', 'properties': ()}
+          {'doc': 'kkk\n\t\tasdfasdf'}
+      attribute
+        primary_key
+        field3
+        attribute_type
+          {'type_name': 'String', 'properties': ({'precision_y': 80},)}
+          {'doc': 'testing...'}
+      attribute
+        field4
+        record_def
+          Testing
+          attributes
+            attribute
+              field_A
+              attribute_type
+                {'type_name': 'Int', 'properties': ()}
+                {'doc': 'field A'}
+            attribute
+              field_B
+              {'type_name': 'Bool', 'properties': ('opt',)}
+            attribute
+              fielc_c
+              enum_def
+                possibilities
+                symbols
+                  symbol	Pol1
+                  symbol
+                    Pow2
+                    "this is possibility 2"
+                  symbol	Pos3
+  enum_def
+    Suite2
+    symbols
+      symbol	COPAS
+      symbol	OUROS
+      symbol	PAUS
+      symbol	MAILHA
+  decorated
+    decorators
+      decorator
+        order
+        arguments
+          argument
+            arg_name	a
+            arg_value	2
+          argument
+            arg_name	b
+            arg_value	
+    record_def
+      map_example
+      {'doc': 'order record can\n\tcheck later'}
+      attributes
+        attribute
+          field1
+          {'type_name': 'Int', 'properties': ()}
+        attribute
+          field_2
+          attribute_type
+            {'type_name': Tree(map_type, ['string', 'int']), 'properties': ()}
+            {'doc': 'map testing'}
+        include_stmt
+          dom.balab
+          {'doc': 'inin'}
+
+IntType(name='Inteiro', is_optional=True, type_discriminator=<DataTypeDiscriminator.INT: 2>, default_value=None, min_value=None, max_value=None)

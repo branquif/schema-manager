@@ -19,7 +19,7 @@ class SchemanIndenter(Indenter):
     tab_len = 4
 
 
-scheman_grammar = Path('./grammar/scheman.lark').read_text()
+scheman_grammar = Path('./grammar/scheman_pure.lark').read_text()
 
 types_schema = Path('./tests/schemas/type_test.schm').read_text()
 common_schema = Path('./examples/cash/comum.schm').read_text()

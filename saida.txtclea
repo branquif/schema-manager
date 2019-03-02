@@ -1,0 +1,1865 @@
+type_test:
+
+start
+  type_def
+    Inteiro
+    data_type
+      type_name	com.int
+      min_value	20
+  type_def
+    Booltype
+    data_type
+      type_name	com.BOOL
+  type_def
+    logtype
+    data_type
+      type_name	Long
+  type_def
+    floattype
+    data_type
+      type_name	com.Float
+    inline_doc	"float type"
+  type_def
+    doubletype
+    data_type
+      type_name	Double
+    inline_doc	"double type"
+  type_def
+    ts
+    data_type
+      type_name	timestamp
+  type_def
+    tstz
+    data_type
+      type_name	timestamptz
+  type_def
+    ti
+    data_type
+      type_name	time
+  type_def
+    titz
+    data_type
+      type_name	timetz
+  type_def
+    kk
+    data_type
+      type_name	int
+  type_def
+    str
+    data_type
+      type_name	string
+      optional
+      precision_x	10
+      precision_y	100
+      default_value	"asdf"
+    multiline_doc	"""testando"""
+  type_def
+    txt
+    data_type
+      type_name	String
+  type_def
+    uuidtype
+    data_type
+      type_name	UUID
+    inline_doc	"uuid type"
+  type_def
+    datetype
+    data_type
+      type_name	Date
+    inline_doc	"date type"
+  type_def
+    timetype
+    data_type
+      type_name	Time
+    inline_doc	"time type"
+  type_def
+    datetimetype
+    data_type
+      type_name	Timestamp
+    multiline_doc	"""datetime type asdfadsf fdsdf"""
+  type_def
+    inttypeO
+    data_type
+      type_name	Int
+      optional
+    inline_doc	"tipo inteiro"
+  type_def
+    booltypeO
+    data_type
+      type_name	com.Bool
+      optional
+    inline_doc	"tipo booleano"
+  type_def
+    logtypeO
+    data_type
+      type_name	Long
+      optional
+    inline_doc	"tipo inteiro longo"
+  type_def
+    floattypeO
+    data_type
+      type_name	Float
+      optional
+    inline_doc	"float type"
+  type_def
+    doubletypeO
+    data_type
+      type_name	Double
+      optional
+    inline_doc	"double type"
+  type_def
+    uuidtypeO
+    data_type
+      type_name	UUID
+      optional
+    inline_doc	"uuid type"
+  type_def
+    bytetypeO
+    data_type
+      type_name	Byte
+      optional
+    inline_doc	"byte type"
+  type_def
+    datetypeO
+    data_type
+      type_name	Date
+      optional
+    inline_doc	"date type"
+  type_def
+    datetimetypeO
+    data_type
+      type_name	Timestamp
+      optional
+    multiline_doc	"""datetime 
+
+	type"""
+  type_def
+    timetypeO
+    data_type
+      type_name	Time
+      optional
+    inline_doc	"time type"
+  type_def
+    Codigo
+    data_type
+      type_name	String
+      precision_y	2
+    multiline_doc	"""short string, usually a mnemonic, used as alternate key or primary
+    key when referencial static data"""
+  type_def
+    Nome
+    data_type
+      type_name	String
+      precision_y	80
+    inline_doc	"Nome Completo"
+  type_def
+    lnae
+    data_type
+      type_name	String
+  type_def
+    Percentual
+    data_type
+      type_name	Decimal
+      precision_x	12
+      precision_y	5
+    inline_doc	"Percentual, 9999999.99999%"
+  type_def
+    Dinheiro
+    data_type
+      type_name	Decimal
+      precision_x	19
+      precision_y	2
+    multiline_doc	"""Tipo Decimal que representa valor monetário com precisão de 19, e duas casas decimais"""
+  enum_def
+    Suite
+    symbols
+      multiline_doc	"""testing
+	1234"""
+      symbol	SPADES
+      symbol	DIAMONDS
+      symbol
+        CLUBS
+        "Clubs suit"
+      symbol
+        HEARTS
+        "Hearts suit"
+  type_def
+    CodigoO
+    data_type
+      type_name	String
+      optional
+      precision_y	2
+    multiline_doc	"""short string, usually a mnemonic, used as alternate key or primary
+    key when
+	referencial static data"""
+  constant_def
+    dotted_name
+      niente
+      nada
+    constant_value	"nothing at aall"
+  constant_def
+    dotted_name	zero
+    constant_value	0
+  constant_def
+    dotted_name	dot_one
+    constant_value	0.1
+  constant_def
+    dotted_name	symbol
+    constant_value	"""
+	this is a symbol
+	and it can be multiline"""
+  type_def
+    cyclist
+    data_type
+      map_type
+        dotted_name	string
+        dotted_name	datetimetz
+  type_def
+    times
+    data_type
+      set_type
+        dotted_name	datetimetz
+  record_def
+    record_name	Order
+    attributes
+      attribute
+        field1
+        data_type
+          type_name	Int
+      attribute
+        field2
+        attribute_type
+          data_type
+            type_name	Timestamp
+          multiline_doc	"""kkk
+		asdfasdf"""
+      attribute
+        primary_key
+        field3
+        attribute_type
+          data_type
+            type_name	String
+            precision_y	80
+          inline_doc	"testing..."
+      attribute
+        field4
+        data_type
+          type_name	String
+          precision_y	2
+  record_def
+    record_name	Order2
+    multiline_doc	"""order record can
+	check later"""
+    attributes
+      attribute
+        field1
+        data_type
+          type_name	Int
+      attribute
+        field2
+        attribute_type
+          data_type
+            type_name	Timestamp
+          multiline_doc	"""kkk
+		asdfasdf"""
+      attribute
+        primary_key
+        field3
+        attribute_type
+          data_type
+            type_name	String
+            precision_y	80
+          inline_doc	"testing..."
+      discriminator_attrib
+        discriminator
+        qualif_o1
+      attribute
+        field4
+        data_type
+          type_name	String
+          precision_y	2
+  record_def
+    record_name	Order3
+    parent_records
+      dotted_name
+        xxx
+        Order1
+      parent_record
+        dotted_name	order2
+        discriminator_value	"o2"
+    multiline_doc	"""order record can
+	check later"""
+    attributes
+      attribute
+        field1
+        data_type
+          type_name	Int
+      attribute
+        field2
+        attribute_type
+          data_type
+            type_name	Timestamp
+          multiline_doc	"""kkk
+		asdfasdf"""
+      attribute
+        primary_key
+        field3
+        attribute_type
+          data_type
+            type_name	String
+            precision_y	80
+          inline_doc	"testing..."
+      attribute
+        field4
+        record_def
+          record_name	Testing
+          attributes
+            attribute
+              field_A
+              attribute_type
+                data_type
+                  type_name	Int
+                inline_doc	"field A"
+            attribute
+              field_B
+              data_type
+                type_name	Bool
+                optional
+            attribute
+              fielc_c
+              enum_def
+                possibilities
+                symbols
+                  symbol	Pol1
+                  symbol
+                    Pow2
+                    "this is possibility 2"
+                  symbol	Pos3
+  enum_def
+    Suite2
+    symbols
+      symbol	COPAS
+      symbol	OUROS
+      symbol	PAUS
+      symbol	MAILHA
+  decorated
+    decorators
+      decorator
+        dotted_name	order
+        arguments
+          argument
+            arg_name	a
+            arg_value	2
+          argument
+            arg_name	b
+            arg_value	"234"
+    record_def
+      record_name	map_example
+      multiline_doc	"""order record can
+	check later"""
+      attributes
+        attribute
+          field1
+          data_type
+            type_name	Int
+        attribute
+          field_2
+          attribute_type
+            data_type
+              map_type
+                dotted_name	string
+                dotted_name	int
+            inline_doc	"map testing"
+        include_stmt
+          dotted_name
+            dom
+            balab
+          inline_doc	"inin"
+  alias_def
+    alias
+      dotted_as_name
+        dotted_name
+          Order3
+          field4
+          field_a
+        offa
+    alias
+      dotted_as_name
+        dotted_name
+          map_example
+          field1
+        mff1
+
+
+
+
+Common:
+
+start
+  module_doc
+    multiline_doc	"""Tipos comuns utilizados no contexto de CASH"""
+  type_def
+    Codigo
+    data_type
+      type_name	String
+      precision_y	2
+    multiline_doc	"""short string, usually a mnemonic, used as alternate key or primary
+    key when referencial static data"""
+  type_def
+    Nome
+    data_type
+      type_name	String
+      precision_y	80
+    inline_doc	"Nome Completo"
+  type_def
+    Percentual
+    data_type
+      type_name	Decimal
+      precision_x	17
+      precision_y	5
+    inline_doc	"Percentual, 99999999999.99999%"
+  type_def
+    Dinheiro
+    data_type
+      type_name	Decimal
+      precision_x	19
+      precision_y	2
+    multiline_doc	"""Tipo Decimal que representa valor monetario com precisao de 19 e duas casas decimais"""
+  enum_def
+    MIMEType
+    symbols
+      multiline_doc	"""MIME Type do corpo do email"""
+      symbol
+        MARKDOWN
+        "text/markdown"
+      symbol
+        HTML
+        "text/html"
+      symbol
+        PLAIN
+        "text/plain"
+  enum_def
+    CodigoTipoPessoa
+    symbols
+      symbol
+        F
+        "Fisica"
+      symbol
+        J
+        "Juridica"
+  record_def
+    record_name	Erro
+    multiline_doc	"""Descricao do erro"""
+    attributes
+      attribute
+        codigoErro
+        attribute_type
+          data_type
+            type_name	Codigo
+          inline_doc	"codigo do erro"
+      attribute
+        textoErro
+        attribute_type
+          data_type
+            type_name	String
+            precision_y	80
+          inline_doc	"descricao do erro"
+  record_def
+    record_name	MensagemEmail
+    multiline_doc	"""mensagem de e-mail a ser enviada"""
+    attributes
+      attribute
+        textoAssuntoEmail
+        attribute_type
+          data_type
+            type_name	String
+            precision_y	50
+          inline_doc	"assunto do e-mail a ser enviado"
+      attribute
+        textoCorpoEmail
+        attribute_type
+          data_type
+            type_name	String
+            precision_y	100
+          inline_doc	"corpo do e-mail a ser enviado, em texto"
+      attribute
+        MIMEType
+        data_type
+          type_name	MIMEType
+  record_def
+    record_name	Endereco
+    attributes
+      attribute
+        nomeLogradouro
+        data_type
+          type_name	String
+          precision_y	80
+      attribute
+        nomeBairro
+        data_type
+          type_name	String
+          precision_y	40
+      attribute
+        nomeCidade
+        data_type
+          type_name	String
+          precision_y	50
+      attribute
+        siglaUF
+        data_type
+          type_name	String
+          precision_y	2
+      attribute
+        numeroCEP
+        data_type
+          type_name	String
+          precision_y	8
+  record_def
+    record_name	Pessoa
+    attributes
+      attribute
+        codigoTipoPessoa
+        data_type
+          type_name	CodigoTipoPessoa
+      attribute
+        nomePessoa
+        attribute_type
+          data_type
+            type_name	Nome
+          inline_doc	"Nome completo da pessoa"
+      attribute
+        nomeFantasia
+        attribute_type
+          data_type
+            type_name	Nome
+            optional
+          inline_doc	"Nome da pessoa jurídica"
+      attribute
+        numeroCpfCnpj
+        attribute_type
+          data_type
+            type_name	String
+            precision_y	14
+          inline_doc	"Pode ser o CPF ou CNPJ"
+  record_def
+    record_name	ChaveConta
+    multiline_doc	"""Identificação de conta"""
+    attributes
+      attribute
+        numeroInstituicao
+        attribute_type
+          data_type
+            type_name	Decimal
+            precision_y	3
+          inline_doc	"numero da instituicao financeira"
+      attribute
+        numeroDigitoVerificadorInstituicao
+        data_type
+          type_name	Decimal
+          precision_y	1
+      attribute
+        numeroAgencia
+        data_type
+          type_name	Decimal
+          precision_y	4
+      attribute
+        numeroConta
+        data_type
+          type_name	Decimal
+          precision_y	7
+      attribute
+        numeroDAC
+        data_type
+          type_name	Decimal
+          precision_y	1
+  record_def
+    record_name	EventHeader
+    multiline_doc	""" Informacoes referentes ao evento """
+    attributes
+      attribute
+        specVersion
+        attribute_type
+          data_type
+            type_name	String
+            precision_y	10
+          inline_doc	"Versao da especificacao do Evento"
+      attribute
+        source
+        attribute_type
+          data_type
+            type_name	String
+            precision_y	100
+          inline_doc	"Descricao do produtor do evento"
+      attribute
+        id
+        attribute_type
+          data_type
+            type_name	UUID
+          inline_doc	"Id do evento"
+      attribute
+        eventTime
+        attribute_type
+          data_type
+            type_name	TimeMillis
+          inline_doc	"A hora em que o evento ocorreu"
+      attribute
+        state
+        attribute_type
+          data_type
+            type_name	String
+            precision_y	100
+          inline_doc	"Estado da entidade relacionada ao evento"
+      attribute
+        conentType
+        attribute_type
+          data_type
+            type_name	String
+            optional
+            precision_y	10
+          inline_doc	"Tipo do envelope da mensagem. Ex: AVRO,JSON"
+
+
+
+
+Beneficiario:
+
+start
+  module_doc
+    multiline_doc	"""Tipos relacionados ao beneficiario de boletos"""
+  import_stmt
+    import_from
+      dotted_name	comum
+      import_as_names
+        import_as_name	Nome
+        import_as_name	Pessoa
+        import_as_name	Endereco
+  type_def
+    IDBeneficiario
+    data_type
+      type_name	String
+      precision_y	12
+    multiline_doc	"""Um ID composto pelas seguintes informações, nesta ordem: Agencia (4 caracteres), 
+    Conta (7 caracteres) e DAC da conta (1 caractere)
+    Ex: Agencia: 0123, Conta: 0001234, DAC: 3 
+        IDBeneficiario: 012300012343"""
+  record_def
+    record_name	Negativacao
+    multiline_doc	"""Informacoes referentes a Negativacao do pagador"""
+    attributes
+      attribute
+        quantidadeDiasNegativacao
+        attribute_type
+          data_type
+            type_name	Decimal
+            precision_y	3
+          inline_doc	"Quantidade de dias para se negativar o pagador, apos a data de vencimento do boleto"
+  record_def
+    record_name	Protesto
+    multiline_doc	"""Informacoes referentes a Protesto do boleto"""
+    attributes
+      attribute
+        quantidadeDiasProtesto
+        attribute_type
+          data_type
+            type_name	Decimal
+            precision_y	3
+          inline_doc	"Quantidade de dias para se protestar o boleto, apos a data de vencimento"
+  record_def
+    record_name	ConfiguracoesCobranca
+    multiline_doc	"""Informa a existência do contrato de cobranca, dos servicos 
+       de negativacao e protesto no contrato e o modo como serão realizados"""
+    attributes
+      attribute
+        indicadorCadastroCobranca
+        data_type
+          type_name	Boolean
+      attribute
+        protesto
+        data_type
+          type_name	Protesto
+          optional
+      attribute
+        negativacao
+        data_type
+          type_name	Negativacao
+          optional
+  record_def
+    record_name	Beneficiario
+    multiline_doc	"""Informação e parametrizações referentes ao contrato de Cobranca"""
+    attributes
+      attribute
+        primary_key
+        idBeneficiario
+        data_type
+          type_name	IDBeneficiario
+      attribute
+        clienteCobranca
+        attribute_type
+          data_type
+            type_name	Pessoa
+          inline_doc	"informacoes pessoais do cliente da cobranca"
+      attribute
+        nomeCobranca
+        attribute_type
+          data_type
+            type_name	Nome
+          inline_doc	"Nome do cliente que estará no boleto emitido"
+      attribute
+        configuracoesCobranca
+        attribute_type
+          data_type
+            type_name	ConfiguracoesCobranca
+          inline_doc	"Configuracoes do contrato de cobranca"
+      attribute
+        enderecoClienteCobranca
+        attribute_type
+          data_type
+            type_name	Endereco
+          inline_doc	"Endereco do cliente na cobranca"
+
+
+
+
+Boleto:
+
+start
+  module_doc
+    multiline_doc	"""Tipos relacionados ao boleto"""
+  import_stmt
+    import_from
+      dotted_name	comum
+      import_as_names
+        import_as_name	Percentual
+        import_as_name	Dinheiro
+        import_as_name	Pessoa
+        import_as_name	MensagemEmail
+        import_as_name	Endereco
+  import_stmt
+    import_from
+      dotted_name	beneficiario
+      import_as_names
+        import_as_name	Beneficiario
+  enum_def
+    FormaEnvio
+    symbols
+      multiline_doc	"""Formas atraves de qual o boleto será enviado"""
+      symbol	impressao
+      symbol	postagem
+      symbol	email
+  enum_def
+    CodigoEspecieDocumento
+    symbols
+      multiline_doc	"""codigo com a especie do boleto"""
+      symbol
+        1
+        "Duplicata Mercantil"
+      symbol
+        2
+        "Nota promissoria"
+      symbol
+        3
+        "Nota de Seguro"
+      symbol
+        4
+        "Mensalidade Escolar"
+      symbol
+        5
+        "Recibo"
+      symbol
+        6
+        "Contrato"
+      symbol
+        7
+        "Cosseguros"
+      symbol
+        8
+        "Duplicata Servico"
+      symbol
+        9
+        "Letra de Cambio"
+      symbol
+        13
+        "Nota de Debitos"
+      symbol
+        15
+        "Documento de Divida"
+      symbol
+        16
+        "Encargos Condominais"
+      symbol
+        17
+        "Prestacao de Servicos"
+      symbol
+        18
+        "Boleto Proposta"
+      symbol
+        99
+        "Diversos"
+  enum_def
+    TipoDataVencimento
+    symbols
+      multiline_doc	"""Determina se sera necessario preencher o campo da data de vencimento"""
+      symbol
+        1
+        "A Vista"
+      symbol
+        3
+        "Data de Vencimento Determinado"
+  enum_def
+    TipoMulta
+    symbols
+      multiline_doc	"""Identifica se a multa sera um valor fixo ou um percentual sobre o valor do boleto"""
+      symbol
+        1
+        "Valor"
+      symbol
+        2
+        "Percentual"
+      symbol
+        3
+        "Sem multa"
+  enum_def
+    TipoJuros
+    symbols
+      multiline_doc	"""Tipo de juros a ser cobrado"""
+      symbol
+        1
+        "Valor diario de juros apos um dia corrida da data de vencimento"
+      symbol
+        2
+        "Percentual diario de juros apos um dia corrido da data de vencimento"
+      symbol
+        3
+        "Percentual mensal de juros apos um dia corrido da data de vencimento"
+      symbol
+        4
+        "Percentual anual de juros apos um dia corrido da data de vencimento"
+      symbol
+        5
+        "Sem Juros"
+      symbol
+        6
+        "Valor diario de juros apos um dia util da data de vencimento"
+      symbol
+        7
+        "Percentual diario de juros apos um dia util da data de vencimento"
+      symbol
+        8
+        "Percentual mensal de juros apos um dia util da data de vencimento"
+      symbol
+        9
+        "Percentual anual de juros apos um dia util da data de vencimento"
+  enum_def
+    TipoDesconto
+    symbols
+      multiline_doc	"""Tipo de desconto a ser concedido"""
+      symbol
+        0
+        "Sem desconto"
+      symbol
+        1
+        "Valor fixo caso o titulo seja pago ate a data informada"
+      symbol
+        2
+        "Valor percentual, aplicado sobre o valor do titulo caso o titulo seja pago ate a data informada"
+      symbol
+        3
+        "Valor que depende da quantidade de dias corridos na antecipacao do pagamento"
+      symbol
+        4
+        "Valor que depende da quantidade de dias úteis na antecipacao do pagamento pagamento"
+      symbol
+        5
+        "Percentual a ser aplicado sobre o valor do titulo, que depende da quantidade de dias corridos na antecipacao do pagamento"
+      symbol
+        6
+        "Percentual a ser aplicado sobre o valor do titulo,  que depende da quantidade de dias uteis na antecipacao do pagamento"
+  enum_def
+    CodigoFormaEmissao
+    symbols
+      multiline_doc	"""Identificacao do tipo de boleto.
+       Se for emitir mais de um boleto, preencher com parcelado
+       Se for emitir um boleto proposta, preencher com proposta
+       Se for emitir um boleto de cobranca, preencher com cobranca."""
+      symbol	cobranca
+      symbol	proposta
+      symbol	parcelado
+  enum_def
+    TipoAutorizacaoRecebimento
+    symbols
+      multiline_doc	"""Identifica quais valores divergentes serao aceitos na cobranca"""
+      symbol
+        1
+        "Aceita qualquer valor"
+      symbol
+        2
+        "Aceita apenas valores entre um valor minimo e maximo"
+      symbol
+        3
+        "Nao aceita pagamento divergente"
+      symbol
+        4
+        "Aceita valores acima de um minimo"
+  enum_def
+    TipoRecebimento
+    symbols
+      multiline_doc	"""Determina se a quantia recebida sera um valor fixo ou um percentual sobre o valor do boleto"""
+      symbol
+        V
+        "Valor"
+      symbol
+        P
+        "Percentual"
+  record_def
+    record_name	Pagador
+    attributes
+      attribute
+        pagador
+        attribute_type
+          data_type
+            type_name	Pessoa
+          inline_doc	"Informacoes pessoais do pagador do boleto"
+      attribute
+        textoEnderecoEmail
+        attribute_type
+          data_type
+            type_name	String
+            optional
+            precision_y	100
+          inline_doc	"Endereco de e-mail do pagador"
+      attribute
+        endereco
+        data_type
+          type_name	Endereco
+  record_def
+    record_name	SacadorAvalista
+    attributes
+      attribute
+        sacadorAvalista
+        attribute_type
+          data_type
+            type_name	Pessoa
+          inline_doc	"Informacoes pessoais do sacador avalista"
+  record_def
+    record_name	Juros
+    attributes
+      attribute
+        dataInicialCobrancaJuros
+        attribute_type
+          data_type
+            type_name	Date
+          inline_doc	"Data inicial para a cobranca de juros"
+      attribute
+        valorJuros
+        attribute_type
+          union_type
+            data_type
+              type_name	Dinheiro
+            data_type
+              type_name	Percentual
+          inline_doc	"Valor de juros a ser aplicado."
+  record_def
+    record_name	Multa
+    multiline_doc	"""Descreve a multa cobrada apos o vencimento do boleto"""
+    attributes
+      attribute
+        dataInicialCobrancaMulta
+        attribute_type
+          data_type
+            type_name	Date
+          inline_doc	"Data inicial para a cobranca de multas"
+      attribute
+        valorMulta
+        attribute_type
+          union_type
+            data_type
+              type_name	Dinheiro
+            data_type
+              type_name	Percentual
+          inline_doc	"Valor de multa a ser aplicado."
+  record_def
+    record_name	RecebimentoDivergente
+    multiline_doc	"""Define os valores mínimos e máximos do recebimento divergente (valor a ser pago diferente do valor do boleto)"""
+    attributes
+      attribute
+        codigotipoRecebimento
+        data_type
+          type_name	TipoRecebimento
+      attribute
+        valorMinimo
+        attribute_type
+          union_type
+            data_type
+              type_name	Dinheiro
+            data_type
+              type_name	Percentual
+          inline_doc	"Valor minimo para recebimento"
+      attribute
+        valorMaximo
+        attribute_type
+          union_type
+            data_type
+              type_name	Dinheiro
+            data_type
+              type_name	Percentual
+          inline_doc	"Valor maximo para recebimento"
+  record_def
+    record_name	PagamentoParcial
+    multiline_doc	"""XXXX"""
+    attributes
+      attribute
+        quantidadePagamentoParcial
+        attribute_type
+          data_type
+            type_name	Decimal
+            precision_y	2
+          inline_doc	"quantidade permitida de pagamentos no pagamento parcial"
+  record_def
+    record_name	Desconto
+    parent_records
+      dotted_name	Multa
+      dotted_name	Juros
+      dotted_name	XXX
+    multiline_doc	"""Descreve os descontos a serem aplicados sobre o valor do boleto ate determinada data"""
+    attributes
+      attribute
+        dataDesconto
+        attribute_type
+          data_type
+            type_name	Date
+          inline_doc	"Data ate a qual o desconto sera aplicado"
+      attribute
+        valorDesconto
+        attribute_type
+          union_type
+            data_type
+              type_name	Dinheiro
+            data_type
+              type_name	Percentual
+          inline_doc	"Valor de desconto a ser concedido."
+  record_def
+    record_name	TextoMensagem
+    multiline_doc	"""Mensagem que aparece no boleto"""
+    attributes
+      attribute
+        textoMensagem
+        data_type
+          type_name	String
+          precision_y	100
+  record_def
+    record_name	BoletoExpressaInicial
+    attributes
+      attribute
+        codigoFormaEnvio
+        data_type
+          type_name	FormaEnvio
+      attribute
+        codigoOperador
+        data_type
+          type_name	String
+          precision_y	9
+      attribute
+        dataVencimento
+        attribute_type
+          data_type
+            type_name	Date
+          inline_doc	"Ultimo dia para pagamento do titulo sem acréscimo de multa, juros e outros"
+      attribute
+        quantidadeParcelas
+        attribute_type
+          data_type
+            type_name	Decimal
+            optional
+            precision_y	3
+          inline_doc	"Quantidade total de parcelas que o titulo geral disponibiliza"
+      attribute
+        negativacao
+        data_type
+          type_name	Negativacao
+          optional
+      attribute
+        protesto
+        data_type
+          type_name	Protesto
+          optional
+      attribute
+        email
+        data_type
+          type_name	MensagemEmail
+          optional
+  record_def
+    record_name	BoletoExternoInicial
+    attributes
+      attribute
+        codigoCarteira
+        data_type
+          type_name	String
+          precision_y	3
+      attribute
+        numeroNossoNumero
+        data_type
+          type_name	String
+          precision_y	8
+      attribute
+        pagamentoParcial
+        data_type
+          type_name	PagamentoParcial
+          optional
+      attribute
+        codigoTipoMulta
+        data_type
+          type_name	TipoMulta
+      attribute
+        codigoTipoAutorizacao
+        data_type
+          type_name	TipoAutorizacao
+      attribute
+        recebimentoDivergente
+        data_type
+          type_name	RecebimentoDivergente
+          optional
+      attribute
+        textoSeuNumero
+        data_type
+          type_name	String
+          optional
+          precision_y	15
+      attribute
+        dataVencimento
+        attribute_type
+          data_type
+            type_name	Date
+            optional
+          inline_doc	"Ultimo dia para pagamento do titulo sem acréscimo de multa, juros e outros"
+  record_def
+    record_name	BoletoInicial
+    attributes
+      attribute
+        primary_key
+        idBoleto
+        attribute_type
+          data_type
+            type_name	UUID
+          inline_doc	"Identificador no sistema do boleto"
+      attribute
+        indicadorSimulacao
+        attribute_type
+          data_type
+            type_name	Bool
+          multiline_doc	"""Indica se a operação efetuada é uma simulação
+		True - simulacao de boleto
+		False - emissao de boleto"""
+      attribute
+        beneficiario
+        data_type
+          type_name	Beneficiario
+      attribute
+        pagador
+        data_type
+          type_name	Pagador
+      attribute
+        sacadorAvalista
+        data_type
+          type_name	SacadorAvalista
+          optional
+      attribute
+        codigoTipoDataVencimento
+        data_type
+          type_name	TipoDataVencimento
+      attribute
+        codigoFormaEmissao
+        data_type
+          type_name	CodigoFormaEmissao
+      attribute
+        valorBoleto
+        attribute_type
+          data_type
+            type_name	Dinheiro
+          inline_doc	"Valor a ser pago"
+      attribute
+        codigoEspecieDocumento
+        data_type
+          type_name	CodigoEspecieDocumento
+      attribute
+        dataEmissao
+        attribute_type
+          data_type
+            type_name	Date
+            optional
+          inline_doc	"data na qual o boleto foi emitido pelo cliente"
+      attribute
+        valorAbatimento
+        attribute_type
+          data_type
+            type_name	Dinheiro
+            optional
+          inline_doc	"Valor do abatimento do titulo. O sistema limita o desconto concedido a 90% do valor do titulo."
+      attribute
+        dataLimitePagamento
+        attribute_type
+          data_type
+            type_name	Date
+            optional
+          inline_doc	"Ultima data que sera possivel pagar o boleto"
+      attribute
+        codigoTipoJuros
+        data_type
+          type_name	TipoJuros
+      attribute
+        juros
+        data_type
+          type_name	Juros
+          optional
+      attribute
+        codigoTipoDesconto
+        data_type
+          type_name	TipoDesconto
+          optional
+      attribute
+        desconto
+        type_instance
+          multiplicity
+            lower_bound	3
+          data_type
+            type_name	Desconto
+            optional
+      attribute
+        multa
+        data_type
+          type_name	Multa
+          optional
+      attribute
+        mensagem
+        type_instance
+          multiplicity
+            lower_bound	9
+          data_type
+            type_name	TextoMensagem
+            optional
+      attribute
+        camposExpressaExterna
+        union_type
+          data_type
+            type_name	BoletoExpressa
+          data_type
+            type_name	BoletoExterno
+  record_def
+    record_name	BoletoExpressaFinal
+    attributes
+      attribute
+        codigoCarteira
+        data_type
+          type_name	String
+          precision_y	3
+      attribute
+        numeroNossoNumero
+        data_type
+          type_name	String
+          precision_y	8
+  record_def
+    record_name	BoletoFinal
+    attributes
+      attribute
+        boletoInicial
+        data_type
+          type_name	BoletoInicial
+      attribute
+        codigoBarras
+        data_type
+          type_name	String
+          precision_y	44
+      attribute
+        numeroLinhaDigitavel
+        data_type
+          type_name	String
+          precision_y	47
+      attribute
+        boletoExpressaFinal
+        attribute_type
+          data_type
+            type_name	BoletoExpressaFinal
+            optional
+          inline_doc	"Campos necessários inclusão, caso o canal de entrada seja 'via Expressa' "
+
+
+
+
+imat common:
+
+start
+  type_def
+    id
+    data_type
+      type_name	long
+    inline_doc	"long integer representing a unique id"
+  type_def
+    code
+    data_type
+      type_name	String
+      precision_y	12
+    multiline_doc	"""short strig, usually a mnemonic, used as alternate key or primary
+	key when referencial static data"""
+  type_def
+    Name
+    data_type
+      type_name	String
+      precision_y	255
+    inline_doc	"Standard Name"
+  type_def
+    Version
+    data_type
+      type_name	String
+      precision_y	255
+    inline_doc	"version of the aggregate"
+  type_def
+    Username
+    data_type
+      type_name	String
+      precision_y	255
+    inline_doc	"default username String"
+  type_def
+    Description
+    data_type
+      type_name	String
+      precision_y	4000
+    inline_doc	"Description"
+  type_def
+    Money
+    data_type
+      type_name	Decimal
+      precision_x	19
+      precision_y	4
+    multiline_doc	"""Decimal type, with precision of 19 and 4 decimal to represent monetary
+	values"""
+
+
+
+
+imat:
+
+start
+  module_doc
+    multiline_doc	"""The imat namespace"""
+  import_stmt
+    import_name
+      dotted_as_names
+        dotted_as_name
+          dotted_name	types
+  record_def
+    record_name	AuditField
+    attributes
+      attribute
+        created_date
+        attribute_type
+          data_type
+            type_name	Date
+          inline_doc	"date of the record creation"
+      attribute
+        created_by
+        attribute_type
+          data_type
+            type_name	Username
+          inline_doc	"username that created the record"
+      attribute
+        last_updated_date
+        attribute_type
+          data_type
+            type_name	Date
+          inline_doc	"date that the record were last updated"
+      attribute
+        last_updated_by
+        attribute_type
+          data_type
+            type_name	Username
+          multiline_doc	"""username who uptaded the record the last"""
+  record_def
+    record_name	KeyValue
+    multiline_doc	"""key/value attribute to be used as a name/value set of values by
+	other records."""
+    attributes
+      attribute
+        key
+        data_type
+          type_name	Name
+          optional
+      attribute
+        key2
+        data_type
+          type_name	Int
+          optional
+      attribute
+        value
+        data_type
+          type_name	String
+          precision_y	4000
+  record_def
+    record_name	NameSpace
+    multiline_doc	"""namespace to focus the domains into specific areas (namespaces)"""
+    attributes
+      attribute
+        primary_key
+        code
+        data_type
+          type_name	Code
+      attribute
+        name
+        data_type
+          type_name	Name
+      attribute
+        description
+        data_type
+          type_name	Description
+  record_def
+    record_name	BoundedContext
+    attributes
+      attribute
+        primary_key
+        code
+        data_type
+          type_name	Code
+      attribute
+        name
+        attribute_type
+          data_type
+            type_name	Name
+          inline_doc	"BC Name"
+      attribute
+        description
+        attribute_type
+          data_type
+            type_name	Description
+          inline_doc	"BC Description"
+      attribute
+        attributeMap
+        attribute_type
+          type_instance
+            multiplicity
+            data_type
+              type_name	AttributeMap
+              optional
+          inline_doc	"BoundedContext attributeMap"
+      include_stmt
+        dotted_name	AuditField
+        inline_doc	"Expand the record in-line"
+  enum_def
+    SchemaType
+    symbols
+      multiline_doc	"""the types of schemas - flat, hierarchical or relational"""
+      symbol	NFLAT
+      symbol	HIERARCHICAL
+      symbol	CUSTOM
+  record_def
+    record_name	DataTypes
+    multiline_doc	"""The data types used by the models"""
+    attributes
+      attribute
+        primary_key
+        code
+        data_type
+          type_name	Code
+      attribute
+        description
+        data_type
+          type_name	Description
+      attribute
+        type
+        enum_def
+          DataTypeType
+          symbols
+            symbol	INTEGER
+            symbol	FLOAT
+            symbol	DECIMAL
+            symbol	STRING
+            symbol	DATE
+            symbol	DATETIME
+  record_def
+    record_name	SchemaType
+    multiline_doc	"""the data types associated with different technologies"""
+    attributes
+      attribute
+        primary_key
+        code
+        data_type
+          type_name	Code
+      attribute
+        name
+        data_type
+          type_name	Name
+      attribute
+        type
+        data_type
+          type_name	SchemaType
+      attribute
+        dataTypes
+        type_instance
+          multiplicity
+          data_type
+            type_name	DataType
+      include_stmt
+        dotted_name	AuditField
+  enum_def
+    LOVStatus
+    symbols
+      symbol	CANDIDATE
+      symbol	IN_USE
+      symbol	DEPRECATED
+  enum_def
+    LOVTypeEnum
+    symbols
+      symbol	NUMERIC
+      symbol	STRING
+      symbol	BOOL
+  record_def
+    record_name	LOFType
+    attributes
+      attribute
+        primary_key
+        code
+        data_type
+          type_name	Code
+      attribute
+        primary_key
+        boundedContext
+        type_instance
+          reference_fk
+          data_type
+            type_name	BoundedContext
+      attribute
+        type
+        data_type
+          type_name	LOVTypeEnum
+      attribute
+        description
+        data_type
+          type_name	Description
+      attribute
+        mandatory
+        data_type
+          type_name	Bool
+          optional
+      include_stmt
+        dotted_name	AuditField
+  record_def
+    record_name	LOVValues
+    attributes
+      attribute
+        primary_key
+        code
+        data_type
+          type_name	Code
+      attribute
+        type
+        type_instance
+          reference_fk
+          data_type
+            type_name	LOVType
+      attribute
+        value
+        data_type
+          type_name	String
+          precision_y	4000
+      attribute
+        high_value
+        data_type
+          type_name	String
+          optional
+          precision_y	4000
+      attribute
+        low_value
+        data_type
+          type_name	String
+          optional
+          precision_y	4000
+      attribute
+        target_high_value
+        data_type
+          type_name	String
+          optional
+          precision_y	4000
+      attribute
+        target_low_value
+        data_type
+          type_name	String
+          optional
+          precision_y	4000
+  record_def
+    record_name	ListOfValues
+    multiline_doc	"""structure to store general domains (list of values)"""
+    attributes
+      attribute
+        primary_key
+        code
+        data_type
+          type_name	Code
+      attribute
+        description
+        data_type
+          type_name	Description
+      attribute
+        status
+        data_type
+          type_name	LOVStatus
+      attribute
+        values
+        type_instance
+          multiplicity
+          data_type
+            type_name	LOVValues
+            optional
+  record_def
+    record_name	Attribute
+    multiline_doc	"""Attribute of an entity"""
+    attributes
+      attribute
+        name
+        data_type
+          type_name	Name
+      attribute
+        description
+        data_type
+          type_name	Description
+          optional
+      attribute
+        attributeMap
+        type_instance
+          multiplicity
+          data_type
+            type_name	AttributeMap
+            optional
+      attribute
+        dataType
+        type_instance
+          reference_fk
+          data_type
+            type_name	DataType
+      attribute
+        isNull
+        data_type
+          type_name	bool
+      attribute
+        isPK
+        data_type
+          type_name	bool
+      attribute
+        order
+        data_type
+          type_name	int
+      attribute
+        lenght
+        data_type
+          type_name	int
+          optional
+      attribute
+        precision
+        data_type
+          type_name	int
+          optional
+      attribute
+        scale
+        data_type
+          type_name	int
+          optional
+      attribute
+        defaultValue
+        data_type
+          type_name	String
+          optional
+          precision_y	4000
+      attribute
+        domain
+        data_type
+          type_name	String
+          optional
+          precision_y	4000
+      attribute
+        list_of_values_code
+        type_instance
+          reference_fk
+          data_type
+            type_name	ListOfValues
+            optional
+  enum_def
+    EntityType
+    symbols
+      multiline_doc	"""Following DDD, as Entity, Value Objecs and Aggregates.
+	A custom type is also available for other types of entities"""
+      symbol	VALUE_OBJECT
+      symbol	ENTITY
+      symbol	AGGREGATE
+      symbol	AGGREGATE_ROOT
+      symbol	CUSTOM
+  record_def
+    record_name	Entity
+    multiline_doc	"""Entity being represented in the logical model"""
+    attributes
+      attribute
+        primary_key
+        code
+        data_type
+          type_name	Code
+      attribute
+        name
+        data_type
+          type_name	Name
+      attribute
+        description
+        data_type
+          type_name	Description
+          optional
+      attribute
+        type
+        data_type
+          type_name	EntityType
+      attribute
+        attributeMap
+        type_instance
+          multiplicity
+          data_type
+            type_name	AttributeMap
+            optional
+      attribute
+        attributes
+        type_instance
+          multiplicity
+          data_type
+            type_name	Attribute
+            optional
+  record_def
+    record_name	SchemaSource
+    multiline_doc	"""Identify the source of the schema, as it comes from a pre-defined
+	structure, lide a software package (SAP, SalesForce) or pre-existing
+	legacy structures"""
+    attributes
+      attribute
+        primary_key
+        name
+        data_type
+          type_name	Name
+      attribute
+        desciption
+        data_type
+          type_name	Description
+      attribute
+        connectionString
+        data_type
+          type_name	String
+          precision_y	4000
+          default_value	"file://var/sources/"
+      attribute
+        password
+        data_type
+          type_name	String
+          precision_y	255
+  record_def
+    record_name	Schema
+    attributes
+      attribute
+        primary_key
+        name
+        data_type
+          type_name	Name
+      attribute
+        primary_key
+        version
+        data_type
+          type_name	Version
+      attribute
+        primary_key
+        boundedContext
+        type_instance
+          reference_fk
+          data_type
+            type_name	BoundedContext
+            optional
+      attribute
+        primary_key
+        namespace
+        type_instance
+          reference_fk
+          data_type
+            type_name	Namespace
+            optional
+      attribute
+        type
+        type_instance
+          reference_fk
+          data_type
+            type_name	SchemaType
+      attribute
+        attributeMap
+        type_instance
+          multiplicity
+          data_type
+            type_name	AttributeMap
+      attribute
+        schemaSource
+        data_type
+          type_name	SchemaSource
+          optional
+      attribute
+        entities
+        type_instance
+          multiplicity
+          data_type
+            type_name	Entity
+            optional
+      include_stmt
+        dotted_name	AuditField
+      attribute
+        value
+        data_type
+          type_name	decimal
+          precision_x	10
+          precision_y	3
+          default_value	1.2
+          min_value	0
+          max_value	99.99
+  constant_def
+    dotted_name
+      INFO
+      TITLE
+    constant_value	"Consulta e Validação do Beneficiario"
+  constant_def
+    dotted_name
+      INFO
+      DESCRIPTION
+    constant_value	"""
+Consulta do Beneficiario, utilizando de entrada o ID do Beneficiário composto pela 
+   Agência, Conta e DAC da conta, retornando os demais dados do Beneficiario 
+   (ID do Beneficiario, Nome e endereco do cliente na cobranca e servicos cadastrados 
+   no contrato de cobranca)"""
+  constant_def
+    dotted_name
+      INFO
+      VERSION
+    constant_value	"1.0"
+  constant_def
+    dotted_name	INFO
+    constant_value	"information about this file"
+  decorated
+    decorators
+      decorator
+        dotted_name
+          rec
+          route
+        arguments
+          argument
+            arg_name	root
+            arg_value	"/dec"
+          argument
+            arg_name	caca
+            arg_value	"coco"
+          argument
+            arg_value	10
+    record_def
+      record_name	dec_record
+      attributes
+        attribute
+          field1
+          data_type
+            type_name	INT
+        attribute
+          field2
+          data_type
+            type_name	double
+

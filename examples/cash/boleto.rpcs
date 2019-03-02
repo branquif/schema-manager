@@ -1,4 +1,4 @@
-from boleto import SolicitacaoOperacaoBoleto, BoletoSimulado, BeneficiarioInvalido, BoletoNaoSimulado
+from boleto import Boleto
 
 INFO.TITLE = "Simulação de Boleto"
 INFO.DESCRIPTION = """
@@ -16,3 +16,21 @@ resource Boleto:
         responses:
             200: BoletoSimulado
             401: [BeneficiarioInvalido, BoletoNaoSimulado]
+
+
+#Revisar os records abaixo
+
+record SolicitacaoOperacaoBoleto:
+    dataSolicitacao Date 
+    Boleto
+
+record BoletoSimulado:
+    Boleto
+
+record BeneficiarioInvalido:
+    idErro
+    mensagemErro
+
+record BoletoNaoSimulado:
+    idErro
+    mensagemErro    

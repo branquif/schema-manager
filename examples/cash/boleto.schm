@@ -1,25 +1,17 @@
 """Tipos relacionados ao boleto"""
 
-from comum import Percentual, Dinheiro, Pessoa, ChaveConta
+from comum import Percentual, Dinheiro, Pessoa, MensagemEmail, Endereco
+from beneficiario import Beneficiario
+
+enum FormaEnvio:  
+	"""Formas atraves de qual o boleto será enviado"""
+
+    impressao
+    postagem
+    email
 
 
-enum CodigoModoEnvio:
-"""Formas atraves de qual o boleto será enviado"""
-
-    I "Impressao"
-    P "Postagem"
-    E "E-mail"
-
-
-enum CodigoOperacaoBoleto:
-    """Indica qual operacao sera efetuada no boleto"""
-    
-    S "Simulacao"
-    E "Efetivacao"
-    A "Alteracao"
-
-
-enum TipoEspecieBoleto: 
+enum CodigoEspecieDocumento: 
     """codigo com a especie do boleto"""
 
     1 "Duplicata Mercantil"
@@ -39,9 +31,8 @@ enum TipoEspecieBoleto:
     99 "Diversos"
 
 
-enum TipoPagamento:
+enum TipoDataVencimento: 
     """Determina se sera necessario preencher o campo da data de vencimento"""
-
     1 "A Vista"
     3 "Data de Vencimento Determinado"
 
@@ -68,7 +59,30 @@ enum TipoJuros:
     9 "Percentual anual de juros apos um dia util da data de vencimento"		
 
 
-enum TipoAutorizacao:
+enum TipoDesconto:
+    """Tipo de desconto a ser concedido"""
+
+    0 "Sem desconto"
+    1 "Valor fixo caso o titulo seja pago ate a data informada"
+    2 "Valor percentual, aplicado sobre o valor do titulo caso o titulo seja pago ate a data informada"
+    3 "Valor que depende da quantidade de dias corridos na antecipacao do pagamento"
+    4 "Valor que depende da quantidade de dias úteis na antecipacao do pagamento pagamento"
+    5 "Percentual a ser aplicado sobre o valor do titulo, que depende da quantidade de dias corridos na antecipacao do pagamento"
+    6 "Percentual a ser aplicado sobre o valor do titulo,  que depende da quantidade de dias uteis na antecipacao do pagamento"
+
+
+enum CodigoFormaEmissao:  
+    """Identificacao do tipo de boleto.
+       Se for emitir mais de um boleto, preencher com parcelado
+       Se for emitir um boleto proposta, preencher com proposta
+       Se for emitir um boleto de cobranca, preencher com cobranca."""
+
+    cobranca
+    proposta
+    parcelado
+
+
+enum TipoAutorizacaoRecebimento:
     """Identifica quais valores divergentes serao aceitos na cobranca"""
 
     1 "Aceita qualquer valor"
@@ -84,71 +98,47 @@ enum TipoRecebimento:
     P "Percentual"
 
 
-enum TipoDesconto:
-    """Tipo de desconto a ser concedido"""
-
-    0 "Sem desconto"
-    1 "Valor fixo caso o titulo seja pago ate a data informada"
-    2 "Valor percentual, aplicado sobre o valor do titulo caso o titulo seja pago ate a data informada"
-    3 "Valor que depende da quantidade de dias corridos na antecipacao do pagamento"
-    4 "Valor que depende da quantidade de dias úteis na antecipacao do pagamento pagamento"
-    5 "Percentual a ser aplicado sobre o valor do titulo, que depende da quantidade de dias corridos na antecipacao do pagamento"
-    6 "Percentual a ser aplicado sobre o valor do titulo,  que depende da quantidade de dias uteis na antecipacao do pagamento"
-
-
-record Pagador:
+record Pagador: 
     pagador Pessoa "Informacoes pessoais do pagador do boleto"
     textoEnderecoEmail String?(100) "Endereco de e-mail do pagador"
+    endereco Endereco
 
 
-record SacadorAvalista:
+record SacadorAvalista: 
     sacadorAvalista Pessoa "Informacoes pessoais do sacador avalista"
 
 
 record Juros: 
     dataInicialCobrancaJuros Date "Data inicial para a cobranca de juros"
-    valorJuros Percentual “Valor de juros a ser cobrado na cobranca apos a data de vencimento do boleto”
-    percentualJuros Percentual "Percentual de juros a ser calculado na cobrança apos a data de vencimento do boleto"
+    valorJuros [Dinheiro,Percentual] "Valor de juros a ser aplicado."
 
 
 record Multa:
     """Descreve a multa cobrada apos o vencimento do boleto"""
 
     dataInicialCobrancaMulta Date "Data inicial para a cobranca de multas"
-    valorMulta Percentual "Valor da multa a ser aplicada."
-    percentualMulta	Percentual	"Percentual a ser calculado para cobranca de multa"
+    valorMulta [Dinheiro,Percentual] "Valor de multa a ser aplicado."
 
 
-record RecebimentoDivergente
-    """Guarda as informacoes referentes ao recebimento divergente (valor a ser pago diferente do valor do boleto)"""
+record RecebimentoDivergente:
+    """Define os valores mínimos e máximos do recebimento divergente (valor a ser pago diferente do valor do boleto)"""
 
-    valorMinimo Percentual "Valor minimo para recebimento"
-    percentualMinimo Percentual "Valor percentual minimo a ser recebido sobre o valor do boleto"
-    valorMaximo Percentual "Valor maximo para recebimento"
-    percentualMaximo Percentual "Valor percentual maximo a ser recebido sobre o valor do boleto"
-
-
-record Negativacao:
-    """Guarda as informacoes a respeito da negativacao do pagador"""
-
-    indicadorNegativacao Bool "Indica se havera ou nao a negativacao do pagador frente ao nao pagamento do boleto."
-    quantidadeDiasNegativacao Decimal(3) "Quantidade de dias para se negativar o pagador"
+    codigotipoRecebimento TipoRecebimento
+    valorMinimo [Dinheiro,Percentual] "Valor minimo para recebimento"
+    valorMaximo [Dinheiro,Percentual] "Valor maximo para recebimento"
 
 
-record Protesto:
-    """Guarda as informacoes a respeito se o protesto sera ou nao efetuado."""
-
-    indicadorProtesto Bool "Indica se havera ou nao o protesto frente ao nao pagamento do boleto"
-    quantidadeDiasProtesto Decimal(3) "Quantidade de dias para se protestar o boleto"
+record PagamentoParcial:
+    """XXXX"""
+    quantidadePagamentoParcial Decimal(2) "quantidade permitida de pagamentos no pagamento parcial"    
 
 
-record Desconto
+record Desconto(Multa, Juros, XXX): #Verificar a redundancia 'dataDesconto'
     """Descreve os descontos a serem aplicados sobre o valor do boleto ate determinada data"""
 
     dataDesconto Date "Data ate a qual o desconto sera aplicado"
-    valorDesconto Percentual "Valor do desconto a ser concedido"
-    percentualDesconto Percentual "Percentual  de desconto a ser concedido"
-
+    valorDesconto [Dinheiro,Percentual] "Valor de desconto a ser concedido."
+    
 
 record TextoMensagem:
     """Mensagem que aparece no boleto"""
@@ -156,71 +146,60 @@ record TextoMensagem:
     textoMensagem String(100)
 
 
-record BoletoBase:
-    *id UUID "Identificador único do boleto"
-    valorBoleto Dinheiro "Valor do principal a ser pago"
-    codigoEspecieBoleto TipoEspecieBoleto
-    dataEmissao Date "data na qual o boleto foi emitido pelo cliente"
-    valorAbatimento Dinheiro? "Valor do abatimento do titulo. O sistema limita o esconto concedido a 90% do valor do titulo.
-    dataLimitePagamento date? "Ultima data que sera possivel pagar o boleto" #Review: quando isso é obrigatório?
-    descontos *Desconto? #Review: Quando isso é obrigatório?
-    """Dados referentes aos descontos do valor do boleto.
-       É possivel adicionar ate 3 descontos."""
-    juros Juros? "Dados referentes aos juros cobrados apos a data de vencimento do boleto" #Review: Quando isso é obrigatório?
-    multa Multa? “Dados referentes às multas cobradas apos a data de vencimento do boleto” #Review: Quando isso é obrigatório?
-    textoMensagemBoleto *MensagemBoleto? "E possivel preencher ate 9 mensagens diferentes de 100 caracteres cada" #Review: Quando isso é obrigatório?
+record BoletoExpressaInicial:
+    codigoFormaEnvio FormaEnvio
+    codigoOperador String(9)
+    dataVencimento Date "Ultimo dia para pagamento do titulo sem acréscimo de multa, juros e outros"
+    quantidadeParcelas Decimal?(3) "Quantidade total de parcelas que o titulo geral disponibiliza" 
+    negativacao Negativacao? 
+    protesto Protesto? 
+    email MensagemEmail? 
 
 
-record BoletoAPI:
-    codigoCarteira String(3)
-    numeroNossoNumero Decimal(8)
-    codigoTipoPagamento TipoPagamento
-    indicadorPagamentoParcial Bool "indica se e possivel pagar o boleto parcialmente"
-    quantidadePagamentoParcial Decimal?(2) "quantidade permitida de pagamentos no pagamento parcial"    
-    codigoTipoDesconto TipoDesconto
-    codigoTipoJuros TipoJuros
+record BoletoExternoInicial:
+    codigoCarteira String(3) 
+    numeroNossoNumero String(8)  
+    pagamentoParcial PagamentoParcial?
     codigoTipoMulta TipoMulta
     codigoTipoAutorizacao TipoAutorizacao
-
-
-record BoletoExpressa:
-    dataVencimento Date "Ultimo dia para pagamento do titulo sem acréscimo de multa, juros e outros"
-    quantidadeParcelas Decimal?(3) "Quantidade total de parcelas que o titulo geral disponibiliza"
-
-
-record BoletoExtras:
-    codigoBarras String(44)
-    numeroLinhaDigitavel String(47)
-    numeroSeuNumero String(15)
-
-
-record SolicitacaoOperacaoBoletoComum:
-    codigoOperacaoBoleto CodigoOperacaoBoleto
-    chaveConta ChaveConta
-    pagador Pagador:
-        """Dados do pagador.
-        Endereco de e-mail obrigatorio caso modo de envio for por e-mail"""
-
-    infoBoleto BoletoBase
-
-
-record SolicitacaoOperacaoBoletoExpresso:
-    codigoOperador CodigoOperador
-    codigoModoEnvio CodigoModoEnvio
-    infoBoletoExpresso BoletoExpressa "Informacoes informadas pelo usuario exclusivas para operacao Expressa"
-    negativacao Negativacao?:
-        """Dados referentes a negativacao.
-        A quantidade de dias de negativacao sera obrigatcria caso haja negativacao."""
-
-    protesto Protesto?:        
-        """Dados referentes a protesto.
-        A quantidade de dias de protesto será obrigatória caso haja protesto."""
-
-
-record SolicitacaoOperacaoBoletoAPI:
-    infoBoletoAPI BoletoAPI "Informacoes informadas pelo usuario exclusivas para operacao via API"
     recebimentoDivergente RecebimentoDivergente?
+    textoSeuNumero String?(15) #Pode ter letras e números
+    dataVencimento Date? "Ultimo dia para pagamento do titulo sem acréscimo de multa, juros e outros" 
 
-record SolicitacaoOperacaoBoleto:
-    codigoOperacaoBoleto CodigoOperacaoBoleto
-    boleto [Solicita]
+
+record BoletoInicial:
+    *idBoleto UUID "Identificador no sistema do boleto"
+    indicadorSimulacao Bool:
+		"""Indica se a operação efetuada é uma simulação
+		True - simulacao de boleto
+		False - emissao de boleto"""
+    
+    beneficiario Beneficiario
+    pagador Pagador 
+    sacadorAvalista SacadorAvalista? 
+    codigoTipoDataVencimento TipoDataVencimento
+    codigoFormaEmissao CodigoFormaEmissao
+    valorBoleto Dinheiro "Valor a ser pago" 
+    codigoEspecieDocumento CodigoEspecieDocumento 
+    dataEmissao Date? "data na qual o boleto foi emitido pelo cliente"
+    valorAbatimento Dinheiro? "Valor do abatimento do titulo. O sistema limita o desconto concedido a 90% do valor do titulo."
+    dataLimitePagamento Date? "Ultima data que sera possivel pagar o boleto" 
+    codigoTipoJuros TipoJuros
+    juros Juros? 
+    codigoTipoDesconto TipoDesconto?
+    desconto *(3)Desconto? 
+    multa Multa? 
+    mensagem *(9)TextoMensagem? 
+    camposExpressaExterna [BoletoExpressa,BoletoExterno] #Melhorar o nome do campo
+
+record BoletoExpressaFinal:
+    codigoCarteira String(3)
+    numeroNossoNumero String(8)
+
+record BoletoFinal:
+    boletoInicial BoletoInicial
+    codigoBarras String(44) 
+    numeroLinhaDigitavel String(47) 
+    boletoExpressaFinal BoletoExpressaFinal? "Campos necessários inclusão, caso o canal de entrada seja 'via Expressa' "
+
+

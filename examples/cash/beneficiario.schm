@@ -1,13 +1,40 @@
-"""Tipos relacionados ao beneficiário de títulos"""
+"""Tipos relacionados ao beneficiario de boletos"""
 
-from comum import Pessoa, Endereco, ChaveConta
+from comum import Nome, Pessoa, Endereco
 
-type CodigoOperador String(9) "Código de identificação do usuário de acesso associado a uma Pessoa Física, representante do beneficiário quando este for Pessoa Jurídica."
+type IDBeneficiario String(12):
+    """Um ID composto pelas seguintes informações, nesta ordem: Agencia (4 caracteres), 
+    Conta (7 caracteres) e DAC da conta (1 caractere)
+    Ex: Agencia: 0123, Conta: 0001234, DAC: 3 
+        IDBeneficiario: 012300012343"""
+
+
+record Negativacao: 
+    """Informacoes referentes a Negativacao do pagador"""
+
+    quantidadeDiasNegativacao Decimal(3) "Quantidade de dias para se negativar o pagador, apos a data de vencimento do boleto"
+
+
+record Protesto: 
+    """Informacoes referentes a Protesto do boleto"""
+
+    quantidadeDiasProtesto Decimal(3) "Quantidade de dias para se protestar o boleto, apos a data de vencimento"
+
+
+record ConfiguracoesCobranca:
+    """Informa a existência do contrato de cobranca, dos servicos 
+       de negativacao e protesto no contrato e o modo como serão realizados"""
+
+    indicadorCadastroCobranca Boolean
+    protesto Protesto? 
+    negativacao Negativacao? 
+
 
 record Beneficiario:
-    beneficiario Pessoa "informações pessoais do beneficiário"
-    nomeCobranca String(80) "nome do beneficiario na cobranca, impresso no titulo"
-    chaveConta ChaveConta "informações da conta corrente do beneficiário"
-
-
+    """Informação e parametrizações referentes ao contrato de Cobranca"""
+    *idBeneficiario IDBeneficiario
+    clienteCobranca Pessoa "informacoes pessoais do cliente da cobranca"
+    nomeCobranca Nome "Nome do cliente que estará no boleto emitido"
+    configuracoesCobranca ConfiguracoesCobranca "Configuracoes do contrato de cobranca"
+    enderecoClienteCobranca Endereco "Endereco do cliente na cobranca"
 

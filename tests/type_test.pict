@@ -1,0 +1,31 @@
+# -------------------------------------------------------------------------
+# Define the different possiblities to test types using scheman
+# -------------------------------------------------------------------------
+
+type_decl: type_def, rec_att_pk, rec_att_ofk, rec_att_mfk, rec_att_include, rec_att_nested_enum, rec_att_nested_record, rec_att_map, rec_att_simple, rec_att_generic
+
+data_type: int, float, double, string, date, time, timetz, timestamp, timestamptz, blob, text, decimal, bool, uuid, generic
+mandatory: true, false
+default: true, false
+min_max: min, max, min_max, none
+min_max_length: max, min_max, none
+
+IF [type_decl] in { "rec_att_generic", "rec_att_nested_record", "rec_att_nested_enum", "rec_att_include", "rec_att_ofk", "rec_att_mfk"}
+then [data_type] = "generic";
+
+IF [data_type] = "generic"
+then [default] = "false" and [min_max] = "none" and [min_max_length] = "none";
+
+if [type_decl] = "rec_att_map"
+then [data_type] in {"int", "string", "date", "time", "timetz", "timestamp", "timestamptz", "bool"}
+and [default] = "false" and [min_max] = "none" and [min_max_length] = "none";
+
+IF [data_type] in {"blob", "text", "bool", "uuid"}
+THEN [min_max] = "none" and [min_max_length] = "none";
+
+IF [data_type] in {"float", "double", "int", "decimal", "date", "time", "timetz", "timestamp", "timestamptz"}
+THEN [min_max_length] = "none" ;
+
+if [data_type] = "string"
+then [min_max] = "none";
+

@@ -1,0 +1,394 @@
+start
+  module_doc	
+this is tye type test module
+we will test lots of possibilities
+
+  type_def
+    Inteiro
+    data_type
+      type_name	com.a.int
+      min_value	20
+  type_def
+    Booltype
+    data_type
+      type_name	com.BOOL
+  type_def
+    logtype
+    data_type
+      type_name	Long
+  type_def
+    floattype
+    data_type
+      type_name	com.Float
+    inline_doc	"float type"
+  type_def
+    doubletype
+    data_type
+      type_name	Double
+    inline_doc	"double type"
+  type_def
+    ts
+    data_type
+      type_name	timestamp
+  type_def
+    tstz
+    data_type
+      type_name	timestamptz
+  type_def
+    ti
+    data_type
+      type_name	time
+  type_def
+    titz
+    data_type
+      type_name	timetz
+  type_def
+    kk
+    data_type
+      type_name	int
+  type_def
+    str
+    data_type
+      type_name	string
+      optional
+      precision_x	10
+      precision_y	100
+      default_value	"asdf"
+    testando
+  type_def
+    txt
+    data_type
+      type_name	String
+  type_def
+    uuidtype
+    data_type
+      type_name	UUID
+    inline_doc	"uuid type"
+  type_def
+    datetype
+    data_type
+      type_name	Date
+    inline_doc	"date type"
+  type_def
+    timetype
+    data_type
+      type_name	Time
+    inline_doc	"time type"
+  type_def
+    datetimetype
+    data_type
+      type_name	Timestamp
+    datetime type asdfadsf fdsdf
+  type_def
+    inttypeO
+    data_type
+      type_name	Int
+      optional
+    inline_doc	"tipo inteiro"
+  type_def
+    booltypeO
+    data_type
+      type_name	com.Bool
+      optional
+    inline_doc	"tipo booleano"
+  type_def
+    logtypeO
+    data_type
+      type_name	Long
+      optional
+    inline_doc	"tipo inteiro longo"
+  type_def
+    floattypeO
+    data_type
+      type_name	Float
+      optional
+    inline_doc	"float type"
+  type_def
+    doubletypeO
+    data_type
+      type_name	Double
+      optional
+    inline_doc	"double type"
+  type_def
+    uuidtypeO
+    data_type
+      type_name	UUID
+      optional
+    inline_doc	"uuid type"
+  type_def
+    bytetypeO
+    data_type
+      type_name	Byte
+      optional
+    inline_doc	"byte type"
+  type_def
+    datetypeO
+    data_type
+      type_name	Date
+      optional
+    inline_doc	"date type"
+  type_def
+    datetimetypeO
+    data_type
+      type_name	Timestamp
+      optional
+    datetime 
+
+	type
+  type_def
+    timetypeO
+    data_type
+      type_name	Time
+      optional
+    inline_doc	"time type"
+  type_def
+    Codigo
+    data_type
+      type_name	String
+      precision_y	2
+    short string, usually a mnemonic, used as alternate key or primary
+    key when referencial static data
+  type_def
+    Nome
+    data_type
+      type_name	String
+      precision_y	80
+    inline_doc	"Nome Completo"
+  type_def
+    lnae
+    data_type
+      type_name	String
+  type_def
+    Percentual
+    data_type
+      type_name	Decimal
+      precision_x	12
+      precision_y	5
+    inline_doc	"Percentual, 9999999.99999%"
+  type_def
+    Dinheiro
+    data_type
+      type_name	Decimal
+      precision_x	19
+      precision_y	2
+    Tipo Decimal que representa valor monetário com precisão de 19, e duas casas decimais
+  enum_def
+    Suite
+    symbols
+      testing
+	1234
+      symbol	SPADES
+      symbol	DIAMONDS
+      symbol
+        CLUBS
+        "Clubs suit"
+      symbol
+        HEARTS
+        "Hearts suit"
+  type_def
+    CodigoO
+    data_type
+      type_name	String
+      optional
+      precision_y	2
+    short string, usually a mnemonic, used as alternate key or primary
+    key when
+	referencial static data
+  constant_def
+    dotted_name
+      niente
+      nada
+    constant_value	"nothing at aall"
+  constant_def
+    dotted_name	zero
+    constant_value	0
+  constant_def
+    dotted_name	dot_one
+    constant_value	0.1
+  constant_def
+    dotted_name	symbol
+    constant_value	"""
+	this is a symbol
+	and it can be multiline"""
+  type_def
+    cyclist
+    data_type
+      map_type
+        dotted_name	string
+        dotted_name	datetimetz
+  type_def
+    times
+    data_type
+      set_type
+        dotted_name	datetimetz
+  record_def
+    Order
+    attributes
+      attribute
+        field1
+        data_type
+          type_name	Int
+      attribute
+        field2
+        attribute_type
+          data_type
+            type_name	Timestamp
+          kkk
+		asdfasdf
+      attribute
+        primary_key
+        field3
+        attribute_type
+          data_type
+            type_name	String
+            precision_y	80
+          inline_doc	"testing..."
+      attribute
+        field4
+        data_type
+          type_name	String
+          precision_y	2
+  record_def
+    Order2
+    order record can
+	check later
+    attributes
+      attribute
+        field1
+        data_type
+          type_name	Int
+      attribute
+        field2
+        attribute_type
+          data_type
+            type_name	Timestamp
+          kkk
+		asdfasdf
+      attribute
+        primary_key
+        field3
+        attribute_type
+          data_type
+            type_name	String
+            precision_y	80
+          inline_doc	"testing..."
+      discriminator_attrib
+        discriminator
+        qualif_o1
+      attribute
+        field4
+        data_type
+          type_name	String
+          precision_y	2
+  record_def
+    Order3
+    parent_records
+      dotted_name
+        xxx
+        Order1
+      parent_record
+        dotted_name	order2
+        discriminator_value	"o2"
+    order record can
+	check later
+    attributes
+      attribute
+        field1
+        data_type
+          type_name	Int
+      attribute
+        field2
+        attribute_type
+          data_type
+            type_name	Timestamp
+          kkk
+		asdfasdf
+      attribute
+        primary_key
+        field3
+        attribute_type
+          data_type
+            type_name	String
+            precision_y	80
+          inline_doc	"testing..."
+      attribute
+        field4
+        record_def
+          Testing
+          attributes
+            attribute
+              field_A
+              attribute_type
+                data_type
+                  type_name	Int
+                inline_doc	"field A"
+            attribute
+              field_B
+              data_type
+                type_name	Bool
+                optional
+            attribute
+              fielc_c
+              enum_def
+                possibilities
+                symbols
+                  symbol	Pol1
+                  symbol
+                    Pow2
+                    "this is possibility 2"
+                  symbol	Pos3
+  enum_def
+    Suite2
+    symbols
+      symbol	COPAS
+      symbol	OUROS
+      symbol	PAUS
+      symbol	MAILHA
+  decorated
+    decorators
+      decorator
+        dotted_name	order
+        arguments
+          argument
+            arg_name	a
+            arg_value	2
+          argument
+            arg_name	b
+            arg_value	"234"
+    record_def
+      map_example
+      order record can
+	check later
+      attributes
+        attribute
+          field1
+          data_type
+            type_name	Int
+        attribute
+          field_2
+          attribute_type
+            data_type
+              map_type
+                dotted_name	string
+                dotted_name	int
+            inline_doc	"map testing"
+        include_stmt
+          dotted_name
+            dom
+            balab
+          inline_doc	"inin"
+  alias_def
+    alias
+      dotted_as_name
+        dotted_name
+          Order3
+          field4
+          field_a
+        offa
+    alias
+      dotted_as_name
+        dotted_name
+          map_example
+          field1
+        mff1
+

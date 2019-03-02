@@ -53,82 +53,47 @@ opt_blob_type: "Blob?"i
 opt_text_type: "Text?"i
 opt_uuid_type: "UUID?"i
 
-?default_str_def: "default"i "=" def_str_value
-?default_int_def: "default"i "=" def_int_value
-?default_dec_def: "default"i "=" def_dec_value
-?min_int_def: "min"i "=" min_int_value
-?max_int_def: "max"i "=" max_int_value
-?min_dec_def: "min"i "=" min_dec_value
-?max_dec_def: "max"i "=" max_dec_value
-?min_str_def: "min"i "=" min_str_value
-?max_str_def: "max"i "=" max_str_value
+// string type size is mandatory
+_sized_string_type: (string_type | opt_string_type) "(" INT ")"
+_sized_decimal_type: (decimal_type | opt_decimal_type) "(" INT ["," INT ]")"
 
-def_str_value: INLINE_STRING
-def_int_value: INT
-def_dec_value: DECIMAL
-min_str_value: INLINE_STRING
-max_str_value: INLINE_STRING
-min_int_value: INT
-max_int_value: INT
-min_dec_value: DECIMAL
-max_dec_value: DECIMAL
+primitive_type : ( int_type
+	| long_type
+	| bool_type
+	| float_type
+	| double_type
+	| decimal_type // decimal size is optional
+	| date_type
+	| time_type
+	| timetz_type
+	| timestamp_type
+	| timestamptz_type
+	| blob_type
+	| text_type
+	| uuid_type)
 
-// string type properties
-min_length: INT
-max_length: INT
-_string_type_property: (string_type | opt_string_type) [("(" max_length ")" | "(" min_length "," max_length ")")] [default_str_def]
-
-precision: INT
-scale: INT
-
-?int_types: (int_type | opt_int_type)
-		   | (long_type | opt_long_type)
-
-?float_types: (float_type | opt_float_type)
-				| (double_type | opt_double_type)
-
-?time_types: ( (time_type | opt_time_type)
-			| (timetz_type | opt_timetz_type)
-			| (timestamp_type | opt_timestamp_type)
-			| (timestamptz_type | opt_timestamptz_type)
-			| (date_type | opt_date_type))
-
-// number type properties
-_int_type_property: int_types (default_int_def | min_int_def | max_int_def)*
-
-_dec_type_property: (decimal_type | opt_decimal_type) ["(" precision ["," scale ]")"] (default_dec_def | min_dec_def | max_dec_def)*
-
-_float_type_property: float_types (default_dec_def | min_dec_def | max_dec_def)*
-
-_minmax_type_property: time_types (default_str_def | min_str_def | max_str_def)*
-
-_default_only_type_property: ( (bool_type | opt_bool_type)
-			| (blob_type | opt_blob_type)
-			| (text_type | opt_text_type)
-			| (uuid_type | opt_uuid_type)) [default_str_def]
+opt_primitive_type : ( opt_int_type
+	| opt_long_type
+	| opt_bool_type
+	| opt_float_type
+	| opt_double_type
+	| opt_decimal_type
+	| opt_date_type
+	| opt_time_type
+	| opt_timetz_type
+	| opt_timestamp_type
+	| opt_timestamptz_type
+	| opt_blob_type
+	| opt_text_type
+	| opt_uuid_type)
 
 unspecified_type: NAME
 opt_unspecified_type: OPT_NAME
 ?generic_type: (unspecified_type | opt_unspecified_type)
 
-?simple_type: ( _int_type_property 
-			| _dec_type_property 
-			| _float_type_property
-			| _minmax_type_property
-			| _default_only_type_property 
-			| _string_type_property )
+?simple_type: ( opt_primitive_type | primitive_type | _sized_string_type | _sized_decimal_type)
 ?data_type: (simple_type | generic_type)
-
-map_key_type: (int_type
-				| string_type
-				| date_type
-				| time_type
-				| timetz_type
-				| timestamp_type
-				| timestamptz_type
-				| bool_type)
-
-map_type: "map"i "(" map_key_type "," data_type ")"
+map_type: "map"i "(" (primitive_type | string_type) "," data_type ")"
 
 // documentatin string styles
 multiline_doc:  MULTILINE_STRING _NEWLINE
@@ -136,29 +101,10 @@ inline_doc: INLINE_STRING
 
 ?element_doc:  ":" _NEWLINE _INDENT multiline_doc _DEDENT | inline_doc _NEWLINE
 
-arguments: argument ("," argument)*  
-arg_name: NAME
-arg_value: (NAME | INT | INLINE_STRING)
-argument: [arg_name "="] arg_value
-
 ////////////////////////////////////////////////////////////
 // document string for the module
 ////////////////////////////////////////////////////////////
 module_doc: multiline_doc
-
-////////////////////////////////////////////////////////////
-//import statements
-////////////////////////////////////////////////////////////
-import_stmt: import_name | import_from
-import_name: "import" dotted_as_names
-// note below: the ("." | "...") is necessary because "..." is tokenized as ELLIPSIS
-import_from: "from" (dots? dotted_name | dots) "import" ("*" | "(" import_as_names ")" | import_as_names)
-!dots: "."+
-import_as_name: NAME ["as" NAME]
-dotted_as_name: dotted_name ["as" NAME]
-import_as_names: import_as_name ("," import_as_name)* [","]
-dotted_as_names: dotted_as_name ("," dotted_as_name)*
-dotted_name: NAME ("." NAME)*
 
 ////////////////////////////////////////////////////////////
 // define a type
@@ -197,7 +143,6 @@ attribute_union: attribute_name "[" data_type [ "," data_type ] "]" (element_doc
 // map type
 attribute_map_type: attribute_name map_type (element_doc | _NEWLINE)
 
-
 // a primary key attribute. Must always be a simple type
 pk_attribute_simple_type: pk_attribute_name data_type (element_doc | _NEWLINE)
 
@@ -220,37 +165,20 @@ _recordbody: _NEWLINE _INDENT [multiline_doc] attributes _DEDENT
 recorddef: "record" NAME ":" _recordbody
 
 ////////////////////////////////////////////////////////////
-// Constant definitions
+//import statements
 ////////////////////////////////////////////////////////////
-constant_value: INLINE_STRING | MULTILINE_STRING
-constant_assignment: dotted_name "=" [_NEWLINE] constant_value
+import_stmt: import_name | import_from
+import_name: "import" dotted_as_names
+// note below: the ("." | "...") is necessary because "..." is tokenized as ELLIPSIS
+import_from: "from" (dots? dotted_name | dots) "import" ("*" | "(" import_as_names ")" | import_as_names)
+!dots: "."+
+import_as_name: NAME ["as" NAME]
+dotted_as_name: dotted_name ["as" NAME]
+import_as_names: import_as_name ("," import_as_name)* [","]
+dotted_as_names: dotted_as_name ("," dotted_as_name)*
+dotted_name: NAME ("." NAME)*
 
-////////////////////////////////////////////////////////////
-// decorators
-////////////////////////////////////////////////////////////
-decorator: "@"dotted_name [ "(" [arguments] ")" ] _NEWLINE
-decorators: decorator+
-decorated: decorators (recorddef)
-
-
-////////////////////////////////////////////////////////////
-// service definition
-////////////////////////////////////////////////////////////
-
-//servicedef: "service" NAME ":" _servicebody
-//_servicebody: _NEWLINE _INDENT [multiline_doc] functions _DEDENT
-//functions: (query_funcdef
-//			| command_fucdef)
-
-
-?stmt: (module_doc 
-		| import_stmt 
-		| enumdef 
-		| typedef 
-		| recorddef
-		| constant_assignment
-		| decorated)
-
+?stmt: (module_doc | import_stmt | enumdef | typedef | recorddef)
 
 
 ///////////////////
@@ -265,11 +193,7 @@ decorated: decorators (recorddef)
 //
 
 DIGIT: "0".."9"
-INT.2: DIGIT+
-DECIMAL.2: INT "." INT? | "." INT | INT
-
-SIGNED_DECIMAL.2: ["+" | "-"] DECIMAL
-SIGNED_INT.1: ["+" | "-"] INT
+INT: DIGIT+
 
 //
 // Strings

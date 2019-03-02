@@ -1,0 +1,17 @@
+type id long "long integer representing a unique id"
+
+type code String(12):
+	"""short strig, usually a mnemonic, used as alternate key or primary
+	key when referencial static data"""
+
+type Name String(255) "Standard Name"
+
+type Version String(255) "version of the aggregate"
+
+type Username String(255) "default username String"
+
+type Description String(4000) "Description"
+
+type Money Decimal(19,4):
+	"""Decimal type, with precision of 19 and 4 decimal to represent monetary
+	values"""

@@ -1,0 +1,13 @@
+
+record Order :
+	"""Order record documentation
+	should have arbitrary size"""
+
+	field1 Int
+	field2 Datetime:
+		"""Attributes should also have
+		multiline documentation"""
+
+	field3 String "inline documentation also works"
+
+

@@ -1,21 +1,19 @@
 """Tipos comuns utilizados no contexto de CASH"""
 
+
 type Codigo String(2):
     """short string, usually a mnemonic, used as alternate key or primary
     key when referencial static data"""
 
+
 type Nome String(80) "Nome Completo"
 
-type Percentual Decimal(12,5) "Percentual, 9999999.99999%"
+
+type Percentual Decimal(17,5) "Percentual, 99999999999.99999%" #Verificar o número de caracteres
+
 
 type Dinheiro Decimal(19,2):
-    """Tipo Decimal que representa valor monetário com precisão de 19, e duas casas decimais"""
-
-record Erro:
-    """Descrição do erro"""
-
-    codigoErro Codigo "código do erro"
-    textoErro String(80) "descrição do erro"
+    """Tipo Decimal que representa valor monetario com precisao de 19 e duas casas decimais"""
 
 
 enum MIMEType:
@@ -26,11 +24,23 @@ enum MIMEType:
     PLAIN "text/plain"
 
 
+enum CodigoTipoPessoa: 
+    F "Fisica"
+    J "Juridica" 
+
+
+record Erro:
+    """Descricao do erro"""
+
+    codigoErro Codigo "codigo do erro"
+    textoErro String(80) "descricao do erro"
+
+
 record MensagemEmail:
     """mensagem de e-mail a ser enviada"""
 
-    textoassuntoEmail String(50) "assunto do e-mail a ser enviado"
-    textocorpoEmail String(100) "corpo do e-mail a ser enviado, em texto"
+    textoAssuntoEmail String(50) "assunto do e-mail a ser enviado"
+    textoCorpoEmail String(100) "corpo do e-mail a ser enviado, em texto"
     MIMEType MIMEType
 
 
@@ -42,13 +52,11 @@ record Endereco:
     numeroCEP String(8)
 
 
-record Pessoa:
+record Pessoa: #Verificar se vai quebrar em record jurídica e física
+    codigoTipoPessoa CodigoTipoPessoa
     nomePessoa Nome "Nome completo da pessoa"
-    numeroCpfCnpj String(25) "Pode ser o CPF ou CNPJ"
-    codigoTipoPessoa enumn CodigoTipoPessoa: 
-        F "Física"
-        J "Jurídica" 
-    endereco Endereco 
+    nomeFantasia Nome? "Nome da pessoa jurídica"
+    numeroCpfCnpj String(14) "Pode ser o CPF ou CNPJ" 
 
 
 record ChaveConta:
@@ -61,12 +69,12 @@ record ChaveConta:
     numeroDAC Decimal(1)
 
 record EventHeader:
-""" Informações referentes ao evento """
+	""" Informacoes referentes ao evento """
 
-    specVersion String(10) "Versão da especificação do Evento"
-    source String(100) "Descrição do produtor do evento"
+    specVersion String(10) "Versao da especificacao do Evento"
+    source String(100) "Descricao do produtor do evento"
     id UUID "Id do evento"
     eventTime TimeMillis "A hora em que o evento ocorreu"
     state String(100) "Estado da entidade relacionada ao evento"
-    contentType String(10) "Tipo do envelope. Ex: AVRO,JSON"
-}
+    conentType String?(10) "Tipo do envelope da mensagem. Ex: AVRO,JSON"
+

@@ -1,0 +1,201 @@
+"""The imat namespace"""
+
+import types
+
+
+# make the com.accenture.com types accessible without full qualified name
+
+# abstract records are ment to be used by other records and cannot be used
+# to create physical schemas
+record AuditField:
+
+	created_date Date "date of the record creation"
+	created_by Username "username that created the record"
+	last_updated_date Date "date that the record were last updated"
+	# Username type bein accessed using full qualified name
+	last_updated_by Username:
+		"""username who uptaded the record the last"""
+
+
+record KeyValue:
+	"""key/value attribute to be used as a name/value set of values by
+	other records."""
+
+	key Name?
+	key2 Int?
+	value String(4000)
+
+
+record NameSpace:
+	"""namespace to focus the domains into specific areas (namespaces)"""
+
+	*code Code
+	name Name
+	description Description
+
+
+record BoundedContext:
+	*code Code
+	name Name "BC Name"
+	description Description "BC Description"
+	attributeMap *AttributeMap? "BoundedContext attributeMap"
+	# will include the AuditField attributes at this location, keeping the
+	# record order
+	!include AuditField     "Expand the record in-line"
+
+
+enum SchemaType:
+	"""the types of schemas - flat, hierarchical or relational"""
+
+	NFLAT
+	HIERARCHICAL
+	CUSTOM
+
+
+record DataTypes:
+	"""The data types used by the models"""
+
+	*code Code
+	description Description
+	type enum DataTypeType:
+
+		INTEGER
+		FLOAT
+		DECIMAL
+		STRING
+		DATE
+		DATETIME
+
+
+record SchemaType:
+	"""the data types associated with different technologies"""
+
+	*code Code
+	name Name
+	type SchemaType
+	dataTypes *DataType
+	!include AuditField
+
+
+enum LOVStatus:
+
+	CANDIDATE
+	IN_USE
+	DEPRECATED
+
+
+enum LOVTypeEnum:
+
+	NUMERIC
+	STRING
+	BOOL
+
+
+record LOFType:
+
+	*code Code
+	*boundedContext !BoundedContext
+	type LOVTypeEnum
+	description Description
+	mandatory Bool?
+	!include AuditField
+
+
+record LOVValues:
+
+	*code Code
+	type !LOVType
+	value String(4000)
+	high_value String?(4000)
+	low_value String?(4000)
+	target_high_value String?(4000)
+	target_low_value String?(4000)
+
+
+record ListOfValues:
+	"""structure to store general domains (list of values)"""
+
+	*code Code
+	description Description
+	status LOVStatus
+	values *LOVValues?
+
+
+record Attribute:
+	"""Attribute of an entity"""
+	name Name
+	description Description?
+	attributeMap *AttributeMap?
+	dataType !DataType
+	isNull bool
+	isPK bool
+	order int
+	lenght int?
+	precision int?
+	scale int?
+	defaultValue String?(4000)
+	domain String?(4000)
+	list_of_values_code !ListOfValues?
+
+
+enum EntityType:
+	"""Following DDD, as Entity, Value Objecs and Aggregates.
+	A custom type is also available for other types of entities"""
+
+	VALUE_OBJECT
+	ENTITY
+	AGGREGATE
+	AGGREGATE_ROOT
+	CUSTOM
+
+
+record Entity:
+	"""Entity being represented in the logical model"""
+
+	*code Code
+	name Name
+	description Description?
+	type EntityType
+	attributeMap *AttributeMap?
+	attributes *Attribute?
+
+record SchemaSource:
+	"""Identify the source of the schema, as it comes from a pre-defined
+	structure, lide a software package (SAP, SalesForce) or pre-existing
+	legacy structures"""
+	*name Name
+	desciption Description
+	connectionString String(4000) default="file://var/sources/"
+	password String(255)
+
+record Schema:
+	*name Name
+	*version Version
+	*boundedContext !BoundedContext?
+	*namespace !Namespace?
+	type !SchemaType
+	attributeMap *AttributeMap
+	schemaSource SchemaSource?
+	entities *Entity?
+	!include AuditField
+	value decimal(10,3) default=1.2 min=0 max=99.99
+
+#Verificar o documento que já existe sobre a API.
+
+INFO.TITLE = "Consulta e Validação do Beneficiario"
+INFO.DESCRIPTION = 
+
+"""
+Consulta do Beneficiario, utilizando de entrada o ID do Beneficiário composto pela 
+   Agência, Conta e DAC da conta, retornando os demais dados do Beneficiario 
+   (ID do Beneficiario, Nome e endereco do cliente na cobranca e servicos cadastrados 
+   no contrato de cobranca)"""
+ 
+INFO.VERSION = "1.0"
+
+INFO = "information about this file"
+
+@rec.route(root="/dec", caca="coco", 10)
+record dec_record:
+	field1 INT
+	field2 double

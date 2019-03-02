@@ -130,13 +130,17 @@ The set of primitive type names is:
 **Long**: 64-bit signed integer
 **Float**: single precision (32-bit) IEEE 754 floating-point number
 **Double**: double precision (64-bit) IEEE 754 floating-point number
-**UUID**: (Universally Unique Identifier)[https://en.wikipedia.org/wiki/Universally_unique_identifier]
 **Bytes**: sequence of 8-bit unsigned bytes (support size)
+**Uuid**: Universal unique identication
 **String**: unicode character sequence (support size)
 **Decimal**: arbitrary-precision signed decimal number (support scale and precision)
 **Date**: 32-bit unsigned integer representing the number of days since epoch 
 	(January 1, 1970) with no corresponding time value.
 **Time**: a time of day, with no reference to a particular calendar, time
+**Timestanp**: Date and Time representation
+**Timetz**: time represented with it's time zone
+**Timestamptz**: timestamp with it's timezone
+**Blob**: arbitrary binary sized object
 
 This is a superset of primitive types, and some of them are not primitives in
 their physical schemas, and a translation mechanism to that specific
@@ -170,6 +174,9 @@ type Code String(12):
 The complex types are represented by the following concepts:
 - **Records**: represents a data entity in the model.
 - **Enums**: list of possible values.
+- **Map**: a dictionary with key and values
+- **List**: A list of a specific value
+- **Set**: a list of unique values
 - **Unions**: a union or a OneOf is used to indicate that an attribute may have
   more than one type.
 
@@ -456,11 +463,11 @@ namespace example.schema
 
 ## Importing definitions
 
-Use the !include directive to include schema files.
+Use the _import_ directive to include schema files.
 
 For example:
 ```
-!include Address.schm
+import Address.schm
 
 record Person
 	name string

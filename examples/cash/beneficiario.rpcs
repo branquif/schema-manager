@@ -1,0 +1,61 @@
+from beneficiario import IDBeneficiario, Beneficiario
+from comum import Erro
+
+#Verificar o documento que já existe sobre a API.
+
+INFO.TITLE = "Consulta e Validação do Beneficiario"
+INFO.DESCRIPTION = 
+"""Consulta do Beneficiario, utilizando de entrada o ID do Beneficiário composto pela 
+   Agência, Conta e DAC da conta, retornando os demais dados do Beneficiario 
+   (ID do Beneficiario, Nome e endereco do cliente na cobranca e servicos cadastrados 
+   no contrato de cobranca)"""
+ 
+INFO.VERSION = 1.0
+
+type pages int:
+	"""Specify the page that you want to retrieve
+	Example: 1"""
+
+type PerPage int default(50) min(10) max(200):
+	"""Specify the amount of items that will be retrieved per page
+	Example: 1"""
+
+@route("/beneficiarios") 
+service Beneficiario:
+	
+	@queryparam(page Page, per_page PerPage)
+	query oberBeneficiarios(:
+		page:
+
+		per_page:
+		parem
+
+
+    @route("/{idBeneficiario}")
+    query obterBeneficiario:
+        parameter path idBeneficiario IDBeneficiario:
+            """Informações do Beneficiário requisitado pelo seu ID (Agência+Conta+DAC)"""
+
+        response: #Verificar os erros
+            ok:
+                type Beneficiario "Informações do Beneficiário"
+
+            bad_request "Solicitacao Impropria"
+            unauthorized "Usuario nao autenticado"
+            forbidden "Acesso nao autorizado"
+            not_found "Recurso Inexistente"
+            method_not_allowed "Metodo nao permitido"
+            unsupported_media_type "Formato de requisicao invalido"
+            unprocessable_entity "Erro na execucao da solicitacao"
+            precondition_required "Pre-requisito necessario"
+            too_many_requests "Ultrapassagem do limite de execucoes"
+            internal_server_error "Erro Inesperado"
+            not_implemented "Nao implementado"
+            bad_gateway "Erro no servidor"
+            service_unavailable "Servico Indisponivel"
+            gateway_timeout "Erro no servidor"
+            error type erro Erro "Codigo de Erro e a mensagem de erro"
+            final "Erro inesperado"
+
+
+
