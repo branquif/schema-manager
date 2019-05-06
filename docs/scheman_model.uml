@@ -1,0 +1,249 @@
+@startuml
+skinparam tabSize 2
+
+!define MC(x) {method} \t<color:grey>x</color>
+!define FC(x) {field} \t<color:grey>x</color>
+!define CM {method} @classmethod
+
+
+title Schema Manager type definitions
+
+enum TypeDisc {
+    BOOL
+    INT
+    FLOAT
+    DECIMAL
+    STRING
+    DATE
+    TIME
+    TIMETZ
+    TIMESTAMP
+    TIMESTAMPTZ
+    BLOB
+    RECORD
+    USER_TYPE
+    ENUM
+    MODEL
+    UNKNOWN
+}
+
+abstract class NamedTuple
+
+class MinMaxValue extends NamedTuple {
+    ..comment..
+    Receives postion_y and/or position_x, beind:
+    type - uses the default max 
+    type(10) - max of 10 
+         ^- max value (position_y)
+    type(10,3) -> precision of 10, scale of 3
+         ^  ^- max value (position_y)
+         |- min value (postion_x)
+    validates if min is bigger or equal to max, 
+    when not None
+    
+    --
+    min_value: Optional[MinMaxValueType]
+    max_value: Optional[MinMaxValueType]
+    --
+    __init__(self, min_value=None, max_value=None)
+    
+    CM
+    from_minmax(cls, position_x, position_y)
+    MC(validate types and if min >= max)
+    MC(
+    
+    CM    
+    from_min(cls, position_y)
+    MC(validates types)
+    
+}
+
+
+class Type {
+    defined_at: Optional[DefType]
+    model: str
+    name: str
+    type_disc: PrimitiveDisc
+}
+
+class Import {
+    model_path: str
+}
+
+class ImportFrom extends Import {
+    import_type_names: List[str]
+    import_all: bool
+    types: List[DefType]
+}
+
+class ImportAs extends Import {
+    types: List[DefType]
+}
+
+class Model extends DefType {
+    imports: List[str]
+    original_def_types: List[DefType]
+    def_types: List[DefType]
+}
+
+class PrimitiveType extends Type
+
+class IterableType extends Type {
+}
+
+class ListType extends IterableType {
+    type: Type
+}
+
+class SetType extends IterableType {
+    type: Type
+}
+
+class MapType extends IterableType {
+    key_type: Type
+    value_type: Type
+}
+
+class UnionType extends Type {
+    variants: List[Type]
+}
+
+class DefTypeDoc {
+    short_doc: Optional[str]
+    long_doc: Optional[str]
+}
+
+class DefType extends Type {
+    doc: DefTypeDoc
+}
+
+class Symbol {
+    name: str
+    short_doc: str
+}
+
+class Enumerator extends DefType {
+    symbols: List[Symbol]
+}
+
+class UserType extends DefType {
+    type: Type
+}
+
+
+class RecordType extends DefType {
+    parents: List[RecordType]
+    attributes: List[Attribute]
+}
+
+class AttributeBase {
+    name: str
+    doc: DefTypeDoc
+}    
+
+class Attribute extends AttributeBase {
+    type: Type
+}
+
+class PKAttribute extends AttributeBase {
+    type: PrimitiveType
+}
+
+class DiscAttribute extends AttributeBase {
+    ..comments..
+    Discriminator should indicate which parent
+    this instance belongs.
+    If disc_value not defined, the class name
+    is used instead
+    
+    --
+    disc_value: Optional[str]
+}
+
+class IncludeAttribute extends AttributeBase {
+    ..comments..
+    Represents the included attribute at this
+    attribute position in the record.
+    
+    It will be expanded to include the original record
+    fields in this position
+    --
+    include_record: str
+    include_fields: List[str]
+    MC(list of possible of records to include. All if empty)
+}
+    
+
+
+
+class WithDefaultType extends PrimitiveType{
+    default_value: Any
+    
+    __init__(self, value = None): None
+    MC(Validates if value matches TypeDisc)
+}
+
+class WithMinMaxType extends WithDefaultType {
+    -min_value: Optional[Any]
+    -max_value: Optional[Any]
+    
+    +__init__(self, min_value=None, max_value=None): None
+    MC(Validates if min and max values matches TypeDisc)
+    
+}
+
+class StringType extends WithDefaultType {
+    ..comments..
+    min len and max len are expanded from MinMaxValue
+    --
+    min_len: Optional[int]
+    max_len: Optional[int]
+}
+
+class DecimalType extends WithDefaultType {
+    ..comments..
+    precision and scale are expanded from MinMaxValue
+    default precision is 28
+    Decimal -> default precision
+    Decimal(10) -> precision of 10
+            ^- max value (position_y)
+    Decimal(10,3) -> precision of 10, scale of 3
+            ^  ^- max value (position_y)
+            |- min value (postion_x)
+    
+    precision <- min_value
+    scale <- max_value
+    --
+    -precision: Optional[int]
+    -scale: Optional[int]
+}
+
+
+class IntType extends WithMinMaxType
+class FloatType extends WithMinMaxType
+class Date extends WithMinMaxType
+class Time extends WithMinMaxType
+class Timetz extends WithMinMaxType
+class Timestamp extends WithMinMaxType
+class Timestamptz extends WithMinMaxType
+class Blob extends PrimitiveType
+
+
+
+DecimalType -up-> MinMaxValue
+StringType -up-> MinMaxValue
+WithMinMaxType -up-> MinMaxValue
+
+DefType -right-> DefTypeDoc
+RecordType "1" --> "*" AttributeBase
+RecordType "1" --> "*"  RecordType : "inheritance"
+Attribute --> Type
+PKAttribute --> PrimitiveType
+
+Enumerator "1" -up-> "*" Symbol : "enumerator symbols"
+
+UserType "1" --> "1" Type : "User Type"
+
+Type -left-> TypeDisc
+
+@enduml

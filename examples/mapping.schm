@@ -1,0 +1,32 @@
+flow xpto:
+	map abx:
+		source comb_ent:
+			from entity1 as e1, entity2 as e2:
+				attributes(
+					attr1 as a1, attr2 as a2,
+					attr4 as ab)
+				where( and(e1.attr3 = e2.attr4, e1.attr5 = e2.attr32,
+						e1.date >= today() ))
+
+		to entity3 as e3
+
+		mapping:
+			e3.a1 = comb_ent.a1
+			e3.a2 = cast(comb_ent.a2)
+			e3.a3 = 123
+
+	map abx2:
+		source
+		from Person as p
+		from PersonType as pt
+
+		to entity3 as e3
+
+		mapping(person, entity3):
+			first_name = Split(p.name, 0)
+			last_name = Split(p.name, -1)
+			type = pt.lookup(name) "when doing a lookup operation"
+
+
+
+

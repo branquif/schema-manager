@@ -1,5 +1,5 @@
 """
-this is tye type test module
+this is the type test module
 we will test lots of possibilities
 """
 # this is a comment
@@ -14,166 +14,188 @@ from xanadu import t1, t2, t3, t4
 from xupan import abla, blebla, xiconico
 
 from common import typeA as A, typeB as B
-from commonBB import typeC as C, typeBlock as Block
+# from commonBB import typeC as C, typeBlock as Block
 
-type Inteiro int? min=20 "testando 123"
-type txt String(50) default="143"
+# type Inteiro int? min = 20 "testando 123"
+# type txt String(5,40) default = "143"
 
-type chavevalor map(string, int) "chave valr"
-type conjunto set(int):
-	"""this is a set type
-	usage may be scarce"""
+# type chavevalor map?(string(20), int) "chave valr"
+# type conjunto set?(int):
+# 	"""this is a set type
+# 	usage may be scarce"""
 
-type arr list(string) "list example"
+# type arr list(String) "list example"
 
-type Percentual Decimal(12,5) "Percentual, 9999999.99999%"
+# type Percentual Decimal(12,5) "Percentual, 9999999.99999%"
 
-type Dinheiro Decimal(19,2):
-	"""Tipo Decimal que representa valor monetário com precisão de 19, e duas casas decimais"""
+# # type Dinheiro Decimal(19,2):
+# # 	"""Tipo Decimal que representa valor monetário com precisão de 19, e duas casas decimais"""
 
-type Booltype BOOL default=true :
-	"""blabla,
-	bleble"""
+# type Booltype BOOL default=true "inline doc" : 
+# 	"""
+# 	blabla,
+# 	bleble"""
 
-type logtype int min=2 max=234
-
-
-type floattype Float "float type"
-type doubletype Double min=.43234234 max=10.32 "double type"
-type ts timestamp
-type tstz timestamptz
-
-type ti time
-type titz timetz
-
-type kk int
-
-type str string?(10,100) default="asdf":
-	"""testando"""
-
-type uuidtype UUID "uuid type"
-# type bytetype Byte "byte type"
-
-type datetype Date "date type"
-
-type timetype Time "time type"
-
-type datetimetype Timestamp:
-	"""datetime type asdfadsf fdsdf"""
+# type logtype int min=2 max=234
 
 
-type inttypeO Int? "tipo inteiro"
-type booltypeO Bool? "tipo booleano"
-type logtypeO Long? "tipo inteiro longo"
+# type floattype Float "float type"
+# type doubletype Double min=.43234234 max=10.32 "double type"
+# type ts timestamp
+# type tstz timestamptz
 
-type floattypeO Float? "float type"
+# type ti time
+# type titz timetz
 
-type doubletypeO Double? "double type"
+# type kk int
 
-type uuidtypeO UUID? "uuid type"
+# type str string?(10,100) default="asdf":
+# 	"""testando"""
 
-type bytetypeO blob? "byte type"
+# type uuidtype UUID "uuid type"
+# # type bytetype Byte "byte type"
 
-type datetypeO Date? "date type"
+# type datetype Date "date type"
 
+# type timetype Time "time type"
 
-type datetimetypeO Timestamp? :
-	"""datetime 
-
-	type"""
-
-
-type timetypeO Time? "time type"
-type Codigo String(2):
-    """short string, usually a mnemonic, used as alternate key or primary
-    key when referencial static data"""
+# type datetimetype Timestamp:
+# 	"""datetime type asdfadsf fdsdf"""
 
 
-type Nome String(80) "Nome Completo"
+# type inttypeO Int? "tipo inteiro"
+# type booltypeO Bool? "tipo booleano"
+# type logtypeO Long? "tipo inteiro longo"
 
-type lnae String
+# type floattypeO Float? "float type"
 
-type variant [string, timestamp?] "variant type"
+# type doubletypeO Double? "double type"
 
+# type uuidtypeO UUID? "uuid type"
 
-enum Suite:
-	"""testing
-	1234"""
-	SPADES
+# type bytetypeO blob? "byte type"
 
-	DIAMONDS
-	CLUBS "Clubs suit"
-	HEARTS "Hearts suit"
+# type datetypeO Date? "date type"
 
 
-type CodigoO String?(2):
-    """short string, usually a mnemonic, used as alternate key or primary
-    key when
-	referencial static data"""
+# type datetimetypeO Timestamp? :
+# 	"""datetime 
+
+# 	type"""
 
 
-niente.nada = "nothing at aall"
-zero = 0
-dot_one = 0.1
-kaka.lala = false
-symbol = """
-	this is a symbol
-	and it can be multiline"""
-
-type cyclist map(string, timestamptz)
-type times set(timestamp)
+# type timetypeO Time? "time type"
+# type Codigo String(2):
+#     """short string, usually a mnemonic, used as alternate key or primary
+#     key when referencial static data"""
 
 
-record Order:
+# type Nome String(80) "Nome Completo"
 
-	field1 Int
-	field2 Timestamp:
-		"""kkk
-		asdfasdf"""
-	*field3 String(80) "testing..."
+# type lnae String
 
-
-	field4 String(2)
-
-# # record Order2:
-
-# # 	"""order record can
-# # 	check later"""
-
-# # 	field1 Int
-# # 	field2 Timestamp:
-# # 		"""kkk
-# # 		asdfasdf"""
-# # 	*field3 String(80) "testing..."
-# # 	%qualif_o1
+# type variant [foo.bar?, string, timestamp?] "variant type":
+# 	"""super long strings"""
 
 
-# # 	field4 String(2)
+# enum Suite "suites":
+# 	"""testing
+# 	1234"""
 
-# # record Order3(xxx.Order1, order2("o2")):
+# 	DIAMONDS
+# 	CLUBS "Clubs suit"
+# 	HEARTS "Hearts suit"
+# 	SPADES
 
-# # 	"""order record can
-# # 	check later"""
 
-# # 	field1 Int
-# # 	field2 Timestamp:
-# # 		"""kkk
-# # 		asdfasdf"""
-# # 	* field3 String(80) "testing..."
+# type CodigoO String?(2):
+#     """short string, usually a mnemonic, used as alternate key or primary
+#     key when
+# 	referencial static data"""
 
-# # 	field4 record Testing:
-# # 		field_A Int "field A"
-# # 		field_B Bool?
-# # 		fielc_c enum possibilities:
-# # 			Pol1
-# # 			Pow2 "this is possibility 2"
-# # 			Pos3
+
+# const niente.nada = "nothing at aall"
+# const zero = 0
+# const dot_one = 0.1
+# const kaka.lala = false
+# const symbol = """
+#  	this is a symbol
+#  	and it can be multiline"""
+
+# # type cyclist map(string, timestamptz)
+# type times set(timestamp)
+
+
+# record Order:
+# 	""" order testing..
+# 	this is the order documentation"""
+
+# 	field1 int
+# 	field2 Timestamp:
+# 		"""kkk
+# 		asdfasdf"""
+# 	*field3 String(80) "testing..."
+# 	$aa.balaxita
+
+# 	%field4 = "as"
+# 	field5 *Lemon "lemon is another entity"
+# 	field6 !Order2.id
+
+# record Order2(Order, Shipment):
+
+# 	"""order record can
+# 	check later"""
+
+# 	* id Int "primary key"
+# 	ordid string?(255) !Order1.id :
+# 		"""foreign key of the order record, using the id field"""
+# 	shipment Shipment "have a list of Shipment"
+# 	deliveries *Shipment "have a list of shipments"
+# 	values list(string) "a list of strings"
+# 	possibles [string(20), Order1]:
+# 		"""could be a string or an Order"""
+# 	field2 Timestamp?:
+# 		"""
+# 		optional Timestamp attribute"""
+# 	field3 String?(80) "optional string"
+# 	$ audit_trail(user_name,
+# 			updated_at) "audit trail fields at this position!"
+# 	%order_kind = "as" "discriminator attribute for Order is as"
+
+# 	field4 String(2)
+# 	possible_type enum :
+# 		AGT
+# 		GATAGA
+# 	blacabla record :
+# 		id int
+# 		nhoque string(255)
+
+# record Order3(xxx.Order1, order2):
+
+# 	"""order record can
+# 	check later"""
+
+# 	field1 Int
+# 	%kind = "O3" "discrimintator value for Order3"
+# 	%kind2 "discrimintator value for Order3"
+# 	field2 Timestamp:
+# 		"""kkk
+# 		asdfasdf"""
+# 	* field3 String(80) "testing..."
+
+# 	field4 record Testing:
+# 		field_A Int "field A"
+# 		field_B Bool?
+# 		fielc_c enum possibilities:
+# 			Pol1
+# 			Pow2 "this is possibility 2"
+# 			Pos3
 
 # enum Suite2:
 # 	COPAS
 # 	OUROS
 # 	PAUS
-# 	MAILHA
+# 	MANILHA
 
 # # @order(a=2, b="234")
 # # record map_example:
